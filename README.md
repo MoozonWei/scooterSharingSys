@@ -1,19 +1,20 @@
 # scooterSharingSys
 
-- What is the project abut?
+1. What is the project abut?
 
-- Files
+2. Files
 
-    scr
+    - scr
     
-    xmind
+    - xmind
     
+3. Classes
 
-## What is the project about?
+## 1. What is the project about?
 
 This is a campus scooter sharing system
 
-## Files
+## 2. Files
 
 ### scr
 
