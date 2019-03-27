@@ -1,1 +1,12 @@
-[{"QMNo":12345678,"fName":"david","lName":"wei"},{"QMNo":12345678,"fName":"Jane","lName":"Chen"}]
+[
+  {
+    "QMNo": 12345678,
+    "fName": "David",
+    "lName": "Wei"
+  },
+  {
+    "QMNo": 87654321,
+    "fName": "Moozon",
+    "lName": "Wei"
+  }
+]
