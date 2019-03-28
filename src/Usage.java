@@ -2,37 +2,59 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Usage {
-    public String pickUpTime = "";
-    public String returnTime = "";
-    public int userQMNo = 0;
+    private String userQMNo;
+    private String pickUpTime = null;
+    private String returnTime = null;
 
-
-    // 设置（当前时间为）取车时间，目前没有返回值
-    public void setPiTime(){
+    // constructor
+    public Usage() {
+        this.setUserQMNo(null);
+    }
+    public Usage(String userQMNo) {
+        this.setUserQMNo(userQMNo);
+    }
+    // getters
+    public String getUserQMNo() {
+        return userQMNo;
+    }
+    public String getPickUpTime() {
+        return pickUpTime;
+    }
+    public String getReturnTime() {
+        return returnTime;
+    }
+    // setters
+    public void setUserQMNo(String userQMNo) {
+        this.userQMNo = userQMNo;
+    }
+    public void setPiTime() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         pickUpTime = df.format(new Date());// new Date()为获取当前系统时间
 
     }
-
-    // 设置（当前时间为）还车时间，目前没有返回值
-    public void setReturnTime (){
+    public void setReturnTime() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         returnTime = df.format(new Date());// new Date()为获取当前系统时间
 
     }
 
+    @Override
+    public String toString() {
+        return ("user QMNo: " + this.getUserQMNo() + "\n" +
+                "pick up time: " + this.getPickUpTime() + "\n" +
+                "return time: " + this.getReturnTime() + "\n");
+    }
+
     // main函数测试代码功能
     public static void main(String args[]) {
-        System.out.println("zhishidiyihang");
         Usage u1 = new Usage();
         u1.setPiTime();
-        System.out.println(u1.pickUpTime);
-        try
-        {
+        System.out.println(u1.getPickUpTime());
+        try {
             Thread.currentThread().sleep(5000);//毫秒
+        } catch (Exception e) {
         }
-        catch(Exception e){}
         u1.setReturnTime();
-        System.out.println(u1.returnTime);
+        System.out.println(u1.getReturnTime());
     }
 }

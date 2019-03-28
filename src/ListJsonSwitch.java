@@ -21,11 +21,11 @@ import java.util.ArrayList;
  *    jsonToUsage
  */
 public class ListJsonSwitch {
-    private static String allPeoFileName = "allPeo.json";
-    private static String userFileName = "user.json";
-    private static String managerFileName = "manager.json";
-    private static String stationFileName = "station.json";
-    private static String usageFileName = "usage.json";
+    private static String allPeoFileName = "jsonFile\\allPeo.json";
+    private static String userFileName = "jsonFile\\user.json";
+    private static String managerFileName = "jsonFile\\manager.json";
+    private static String stationFileName = "jsonFile\\station.json";
+    private static String usageFileName = "jsonFile\\usage.json";
 
     // read & write
     private static void writeStringToJson(String jsonString, String fileName) {
@@ -92,28 +92,28 @@ public class ListJsonSwitch {
 
     public static ArrayList<User> jsonToUser(){
         String jsonString = readStringFromJson(userFileName);
-        Type type = new TypeToken<ArrayList<AllPpInSchl>>(){}.getType();
+        Type type = new TypeToken<ArrayList<User>>(){}.getType();
         ArrayList<User> UserArrayList = new Gson().fromJson(jsonString,type);
         return UserArrayList;
     }
 
     public static ArrayList<Manager> jsonToManager(){
         String jsonString = readStringFromJson(managerFileName);
-        Type type = new TypeToken<ArrayList<AllPpInSchl>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Manager>>(){}.getType();
         ArrayList<Manager> ManagerArrayList = new Gson().fromJson(jsonString,type);
         return ManagerArrayList;
     }
 
     public static ArrayList<Station> jsonToStation(){
         String jsonString = readStringFromJson(stationFileName);
-        Type type = new TypeToken<ArrayList<AllPpInSchl>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Station>>(){}.getType();
         ArrayList<Station> StationArrayList = new Gson().fromJson(jsonString,type);
         return StationArrayList;
     }
 
     public static ArrayList<Usage> jsonToUsage(){
         String jsonString = readStringFromJson(usageFileName);
-        Type type = new TypeToken<ArrayList<AllPpInSchl>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Usage>>(){}.getType();
         ArrayList<Usage> UsageArrayList = new Gson().fromJson(jsonString,type);
         return UsageArrayList;
     }

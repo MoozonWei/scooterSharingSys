@@ -1,16 +1,55 @@
 # scooterSharingSys
 
-[TOC]
+## CONTENTS
+
+#### 	1. WHAT IS THE PROJECT ABOUT?
+
+#### 	2. FILE STRUCTURE
+
+  - scr
+    
+  - jsonFile
+    
+  - xmind
+
+#### 	3. ENTITY CLASSES
+
+  - AllPpInSchl.java
+
+  - User.java
+
+  - Manager.java
+
+  - Station.java
+
+  - Usage.java
+
+#### 	4. CONTROL CLASSES
+
+- ManSysOp.java
+- ListJsonSwitch.java
+
+
+
+
 
 ## 1. WHAT IS THE PROJECT ABOUT?
 
 This is a campus scooter sharing system
 
-## 2. FILES
+
+
+
+
+## 2. FILE STRUCTURE
 
 - #### scr
 
   All the source codes are in this directory
+
+- #### jsonFile
+
+  *allPeo.json	manager.json	station.json	usage.json	user.json*
 
 - #### xmind
 
@@ -25,6 +64,10 @@ This is a campus scooter sharing system
       public int QMNo;
       public String fName;
       public String lName;
+      
+      // constructor
+      public AllPpInSchl() 
+      public AllPpInSchl(String QMNo, String fName, String lName)
   }
   ```
 
@@ -34,11 +77,16 @@ This is a campus scooter sharing system
 
   ```java
   public class User {
-      public int QMNo;
+      public String QMNo;
       public String fName;
       public String lName;
       public String email;
       public boolean fineOrNot;
+      
+      // constructor
+      public User()
+      public User(String QMNo, String fName, String lName)
+      public User(String QMNo, String fName, String lName, String email)
   }
   
   ```
@@ -47,10 +95,14 @@ This is a campus scooter sharing system
 
   ```java
   public class Manager {
-      private String fName;
-      private String lName;
       private String ID;
       private String passwd;
+      private String fName;
+      private String lName;
+      
+      // constructor
+      public Manager()
+      public Manager(String ID, String passwd, String fName, String lName)
   }
   ```
 
@@ -59,9 +111,14 @@ This is a campus scooter sharing system
   ```java
   public class Station {
       private char stationName;
-      private boolean[] slots = new boolean[8];
-      private boolean[] lights = new boolean[8];
+      private boolean[] slots;
+      private boolean[] lights;
       
+      // constructor
+      public Station()
+      public Station(char stationName)
+      
+      // functional methods
       public int gvMeAScooter()
       public int gvAnEmptySlot()
       public void pickUpScooter()
@@ -72,13 +129,20 @@ This is a campus scooter sharing system
 
   ```java
   public class Usage {
-      public String pickUpTime = "";
-      public String returnTime = "";
-      public int userQMNo = 0;
+      public String userQMNo;
+      public String pickUpTime = null;
+      public String returnTime = null;
+      
+      // constructor
+      public Usage()
+      public Usage(String userQMNo)
   }
   ```
 
-  
+
+
+
+
 
 ## 4. CONTROL CLASSES
 
@@ -88,6 +152,7 @@ This is a campus scooter sharing system
   public class ManSysOp {
       
       public static boolean loginCheck(ArrayList<Manager> managerArrayList, String ID, String passwd)
+          
   }
   ```
 
@@ -97,11 +162,11 @@ This is a campus scooter sharing system
 
   ```java
   public class ListJsonSwitch {
-      private static String allPeoFileName = "allPeo.json";
-      private static String userFileName = "user.json";
-      private static String managerFileName = "manager.json";
-      private static String stationFileName = "station.json";
-      private static String usageFileName = "usage.json";
+      private static String allPeoFileName = "jsonFile\\allPeo.json";
+      private static String userFileName = "jsonFile\\user.json";
+      private static String managerFileName = "jsonFile\\manager.json";
+      private static String stationFileName = "jsonFile\\station.json";
+      private static String usageFileName = "jsonFile\\usage.json";
   
       // read & write
       private static void writeStringToJson(String jsonString, String fileName)
@@ -121,4 +186,6 @@ This is a campus scooter sharing system
   }
   ```
 
-  
+
+
+
