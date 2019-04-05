@@ -23,6 +23,22 @@ public class Station {
     public boolean getLights(int i) {               // return a boolean value of the i-th light
         return lights[i];
     }
+    public int gvMeAScooter() {      // return i means there's a scooter in slot[i], 8 means there's no more scooter
+        int i;
+        for (i = 0; i < 8; i++) {
+            if (getSlots(i))            // 遍历找slot，有车就返回i
+                break;
+        }                           // 循环结束时，表明中途没有break，即没有找到车，此时i值为8
+        return i;
+    }
+    public int gvAnEmptySlot() {     // return i means it's empty in slot[i], 8 means no more empty slot
+        int i;
+        for (i = 0; i < 8; i++) {
+            if (!getSlots(i))           // 遍历找slot，无车就返回i
+                break;
+        }                           // 循环结束时，表明中途没有break，即没有找到空位，此时i值为8
+        return i;
+    }
     // setters
     public void setStationName(char stationName) {
         this.stationName = stationName;
@@ -49,36 +65,4 @@ public class Station {
                                        "6[" + this.getLights(6) + "] 7[" + this.getLights(7) + "]" + "\n");
     }
 
-    // functional methods
-    public int gvMeAScooter() {      // return i means there's a scooter in slot[i], 8 means there's no more scooter
-        int i;
-        for (i = 0; i < 8; i++) {
-            if (getSlots(i))            // 遍历找slot，有车就返回i
-                break;
-        }                           // 循环结束时，表明中途没有break，即没有找到车，此时i值为8
-        return i;
-    }
-
-    public int gvAnEmptySlot() {     // return i means it's empty in slot[i], 8 means no more empty slot
-        int i;
-        for (i = 0; i < 8; i++) {
-            if (!getSlots(i))           // 遍历找slot，无车就返回i
-                break;
-        }                           // 循环结束时，表明中途没有break，即没有找到空位，此时i值为8
-        return i;
-    }
-
-    public void pickUpScooter() {
-        int availableSlot = this.gvMeAScooter();
-        if (availableSlot >= 0 && availableSlot < 8) {
-            this.setLights(availableSlot, true);             // 在可以取车的位置亮灯
-            // 计时，
-        } else {
-            // 没有车了
-        }
-    }
-
-    public void returnScooter() {
-
-    }
 }

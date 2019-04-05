@@ -19,7 +19,7 @@ public class test {
         System.out.println("----------------------------------------------------\n");
 
         // add User
-        User user1 = new User("12345678", "David", "Wei");
+        User user1 = new User("88888888", "David", "Wei");
         User user2 = new User("87654321", "Moozon", "Wei");
         ArrayList<User> userArrayList = new ArrayList<>();
         userArrayList.add(user1);

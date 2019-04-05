@@ -4,6 +4,9 @@
 
 #### 	1. WHAT IS THE PROJECT ABOUT?
 
+  This is a project about scooter sharing system of QMUL.
+
+
 #### 	2. FILE STRUCTURE
 
   - scr
