@@ -63,19 +63,31 @@ public class test {
         System.out.println("----------------------------------------------------\n");
 
         // add Usage
-        Usage usage1 = new Usage("12345678");   usage1.setPiTime(); usage1.setReturnTime();
-        Usage usage2 = new Usage("12345678");   usage2.setPiTime(); usage2.setReturnTime();
-        Usage usage3 = new Usage("87654321");   usage3.setPiTime(); usage3.setReturnTime();
         ArrayList<Usage> usageArrayList = new ArrayList<>();
-        usageArrayList.add(usage1);
-        usageArrayList.add(usage2);
-        usageArrayList.add(usage3);
+        stationArrayList.get(0).setSlot(3, true);
+        stationArrayList.get(1).setSlot(3, true);
+        stationArrayList.get(2).setSlot(3, true);
+        StationController.pickUpScooter("88888888", stationArrayList.get(1), usageArrayList);
+        StationController.pickUpScooter("87654321", stationArrayList.get(2), usageArrayList);
+        StationController.pickUpScooter("11111111", stationArrayList.get(0), usageArrayList);
+        StationController.pickUpScooter("22222222", stationArrayList.get(1), usageArrayList);
         ListJsonSwitch.UsageToJson(usageArrayList);
-        ArrayList<Usage> usageArrayList1 = ListJsonSwitch.jsonToUsage();
         System.out.println("Usage:\n");
-        for(Usage usage : usageArrayList1){
+        for(Usage usage : usageArrayList){
             System.out.println(usage.toString());
         }
         System.out.println("----------------------------------------------------\n");
+        try {
+            Thread.currentThread().sleep(5000);//毫秒
+        } catch (Exception e) {
+        }
+        StationController.returnScooter("11111111", stationArrayList.get(1), usageArrayList);
+        ListJsonSwitch.UsageToJson(usageArrayList);
+        System.out.println("Usage:\n");
+        ArrayList<Usage> usageArrayList1 = ListJsonSwitch.jsonToUsage();
+        for(Usage usage : usageArrayList1){
+            System.out.println(usage.toString());
+        }
+
     }
 }

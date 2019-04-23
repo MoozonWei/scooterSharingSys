@@ -19,7 +19,7 @@ public class StationController {
         return false;
     }
 
-    public static boolean fineChecking(ArrayList<User> userArrayList, String QMNo) {
+    public static boolean pickUpFineChecking(ArrayList<User> userArrayList, String QMNo) {
         for(User user : userArrayList) {
             if(user.getQMNo() == QMNo) {
                 if(user.isFineOrNot())
@@ -29,14 +29,34 @@ public class StationController {
         return false;
     }
 
+    public static boolean returnFineChecking(ArrayList<Usage> usageArrayList, String QMNo) {
+        for(Usage usage : usageArrayList) {
+            if(usage.getUserQMNo() == QMNo) {
+                if(usage.getReturnTime() == null)
+                    return false;                        // there isn't any un-return scooter
+            }
+        }
+        return true;
+    }
+
     public static boolean usageChecking(ArrayList<Usage> usageArrayList, String QMNo) {
         for(Usage usage : usageArrayList) {
             if(usage.getUserQMNo() == QMNo) {
                 if(usage.getReturnTime() == null)
-                    return true;                        // allow
+                    return false;                        // there isn't any un-return scooter
             }
         }
-        return false;                                   // not allow
+        return true;                                   // there is a un-return scooter
+    }
+
+    public static int unfinishedUsage(ArrayList<Usage> usageArrayList, String QMNo) {
+        for(Usage usage : usageArrayList) {
+            if(usage.getUserQMNo() == QMNo) {
+                if(usage.getReturnTime() == null)
+                    return usageArrayList.indexOf(usage);
+            }
+        }
+        return -1;
     }
 
     // 取车
@@ -49,21 +69,24 @@ public class StationController {
     public static boolean pickUpScooter(String QMNo, Station station, ArrayList<Usage> usageArrayList) {
         long beginTime = System.currentTimeMillis();//开始时间
         long overTime = 60 * 1000;//运行时间
+        char stationName = station.getStationName();
 
         int availableSlot = station.gvMeAScooter();
         if (availableSlot >= 0 && availableSlot < 8) {
-            station.setLights(availableSlot, true);             // 在可以取车的位置亮灯
+            station.setLight(availableSlot, true);             // 在可以取车的位置亮灯
             // 计时，
             while(true) {
                 long nowTime = System.currentTimeMillis();
                 if((nowTime - beginTime) > overTime){
-                    station.setLights(availableSlot, false);
+                    station.setLight(availableSlot, false);
                     return false;
                 }
-                else if(station.getSlots(availableSlot) == false) {
-                    Usage usage = new Usage(QMNo);
+                else if(station.getSlot(availableSlot)) {
+                    Usage usage = new Usage(QMNo, stationName);
                     usage.setPiTime();
-                    station.setLights(availableSlot, false);
+                    usageArrayList.add(usage);
+                    station.setLight(availableSlot, false);
+                    station.setSlot(availableSlot, false);
                     return true;
                 }
             }
@@ -80,21 +103,42 @@ public class StationController {
             3. false：返回信息提示该用户还有罚款未交
             4. true： 返回null表示该用户目前可以借车，并配合pickUpScooter()使用
          */
-    public static String returnChecking(ArrayList<Usage> usageArrayList, String QMNo) {
 
-        return null;
-    }
 
 
 
     // 还车
     /*
         1. 先找到一个空闲的车位，如果没有空闲的车位了就返回相应的提示信息
-        2. 如果有车可以借：闪灯----->计时开始----->是否拿走？----拿走---->该slot设为false---->添加一个Usage----->返回提示信息
+        2. 如果有车可以借：闪灯----->计时开始----->是否拿走/？----拿走---->该slot设为false---->添加一个Usage----->返回提示信息
                                                    |
                                                    |----没拿走---->返回提示信息
     */
-    public void returnScooter() {
+    public static boolean returnScooter(String QMNo, Station station, ArrayList<Usage> usageArrayList) {
+        long beginTime = System.currentTimeMillis();//开始时间
+        long overTime = 60 * 1000;//运行时间
+        char stationName = station.getStationName();
 
+        int availableSlot = station.gvAnEmptySlot();
+        if (availableSlot >= 0 && availableSlot < 8) {
+            station.setLight(availableSlot, true);             // 在可以还车的位置亮灯
+            // 计时，
+            while(true) {
+                long nowTime = System.currentTimeMillis();
+                if((nowTime - beginTime) > overTime){
+                    station.setLight(availableSlot, false);
+                    return false;
+                }
+                else if(!station.getSlot(availableSlot)) {
+                    int unfinishedIndex = unfinishedUsage(usageArrayList, QMNo);
+                    usageArrayList.get(unfinishedIndex).setReturnTime();
+                    usageArrayList.get(unfinishedIndex).setReturnStation(stationName);
+                    station.setLight(availableSlot, false);
+                    station.setSlot(availableSlot, true);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

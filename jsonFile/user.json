@@ -1,14 +1,1 @@
-[
-  {
-    "QMNo": "88888888",
-    "fName": "David",
-    "lName": "Wei",
-    "fineOrNot": false
-  },
-  {
-    "QMNo": "87654321",
-    "fName": "Moozon",
-    "lName": "Wei",
-    "fineOrNot": false
-  }
-]
+[{"QMNo":"88888888","fName":"David","lName":"Wei","fineOrNot":false},{"QMNo":"87654321","fName":"Moozon","lName":"Wei","fineOrNot":false}]
