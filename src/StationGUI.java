@@ -6,11 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-//GUI锟侥斤拷锟斤拷太锟筋，label锟斤拷锟斤拷锟絙utton锟斤拷锟斤拷
+/**Station GUI for three different stations
+ * This is a GUI interface for the stations for users
+ * which can pick up or return a scooter
+ * with existed ID and check fine status
+ * 
+ * version 2.0
+ * @author Cong Li,Qinuo Yao, Minghao Hu,Zihan Wei
+ */
 
 public class StationGUI extends JFrame implements ActionListener {
 
-
+    // the list for station, user, usage
     ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
     ArrayList<User> userList = new ArrayList<>();
     ArrayList<Usage> usageList = new ArrayList<>();
@@ -34,6 +41,7 @@ public class StationGUI extends JFrame implements ActionListener {
     JLabel asnbr = new JLabel("", JLabel.CENTER);
     JLabel esnbr = new JLabel("", JLabel.CENTER);
 
+    //the 8 position for scooters and slots
     JLabel position = new JLabel("Position", JLabel.CENTER);
     JLabel position_1 = new JLabel("1", JLabel.CENTER);
     JLabel position_2 = new JLabel("2", JLabel.CENTER);
@@ -53,8 +61,9 @@ public class StationGUI extends JFrame implements ActionListener {
     JLabel slot7 = new JLabel("slot7", JLabel.CENTER);
     JLabel slot8 = new JLabel("slot8", JLabel.CENTER);
 
-    JTextField t1 = new JTextField();
+    JTextField t1 = new JTextField();//scan the ID
     
+    // the pictures for the bulb, lock and unlock to represent the actual scene
     ImageIcon[] bulb = { new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"),
 			new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"),
 			new ImageIcon("bulb.jpg"), };
@@ -77,9 +86,14 @@ public class StationGUI extends JFrame implements ActionListener {
 
     //------------------------------------lock and buld------------------------------------//
 
+	/**
+     * Constructor
+     * set the layout, size, font and bound 
+     */
     public StationGUI (int name) {
         this.number = name;
 
+        //judge which station you choose
         if (name == 0) {
             stationA = stationList.get(0);
             l2.setText("A");
@@ -208,8 +222,9 @@ public class StationGUI extends JFrame implements ActionListener {
         confirm.setLocation(100, 10);
         confirm.addActionListener(this);
 
-
-
+        /**
+         * get the slot information
+         */
         if (stationA.getSlot(0) == true)
             slot1.setText("true");
         else
@@ -258,6 +273,7 @@ public class StationGUI extends JFrame implements ActionListener {
             }
         }
 
+        //set the UI information
         asnbr.setText(count + "");
         esnbr.setText((8 - count) + "");
         bulbshow.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -265,6 +281,7 @@ public class StationGUI extends JFrame implements ActionListener {
         bulbshow.setHorizontalAlignment(SwingConstants.CENTER);
 
 
+        //add the bulb information according to the station light information
         p2.add(bulbshow);
         		
 		int lightNo=-1;
@@ -287,6 +304,7 @@ public class StationGUI extends JFrame implements ActionListener {
 		lockshow.setHorizontalAlignment(SwingConstants.CENTER);
 
 		p2.add(lockshow);
+		//add the lock information according to the station light information
 		for (int i = 0; i < 8; i++) {
 			locklabel[i].setIcon(lock[i]);
 			locklabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
@@ -313,39 +331,54 @@ public class StationGUI extends JFrame implements ActionListener {
 			Thread clearthread = new Thread(new clearthread(lightNo,name));
            
 			
-			clearthread.start();
+			clearthread.start();//start
 		}
     }
-    
+    /**Inner thread class
+     * It can make the light to flash 
+     * 
+     */
     class clearthread implements Runnable{
 		int lightNo;
 		boolean live=true;
 		int HP;
 		int name;
+		
+		/**Clear thread constructor
+	     * @param the integer of the number of light, the integer of the station name
+	     * 
+	     */
 		public clearthread(int lightNo,int name){
 			this.lightNo=lightNo;
 			this.live=true;
-			this.HP=43; //750ms一个循环
+			this.HP=43; //750ms on loop
 			this.name=name;
 		}
+		/**Run method
+	     *
+	     * make the bulb picture flash
+	     */
 		public void run(){
 			System.out.println("light success");
 
 			while(this.live){//Only when the thread is live,it will work.
 				bulblabel[lightNo].setVisible(true);
-				System.out.println("---------light success1");
 				delay();
-				System.out.println("---------light success2");
 				bulblabel[lightNo].setVisible(false);
 				delay();
 				HP--;
 				if(HP==0)
 					this.live=false;
-				live=getLive(this.name);//Judge whrther it should live or not.
+				live=getLive(this.name);//Judge whether it should live or not.
 			}
 			System.out.println("**----------This light thread died");
 		}
 
+		/**get thread live method
+	     * to check which station light has to be flashed
+	     * @return the boolean to judge whether the light is on
+	     * 
+	     */
 		public boolean getLive(int na){
 			ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
 			boolean lightJudge;
@@ -366,6 +399,10 @@ public class StationGUI extends JFrame implements ActionListener {
 			return true;
 		}
 
+		/**delay method
+	     * to control the flash frequency of bulb picture
+	     * 
+	     */
 		public void delay(){
 			long startTime =  System.currentTimeMillis();
 			while(true)
@@ -377,7 +414,11 @@ public class StationGUI extends JFrame implements ActionListener {
 			}
 		}
 	}
-	
+    
+    /**Action performed method
+     * for pressing different buttons
+     * 
+     */
     public void actionPerformed(ActionEvent e) {
         String QMID = t1.getText();
         userList = ListJsonSwitch.jsonToUser();

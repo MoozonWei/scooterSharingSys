@@ -1,11 +1,9 @@
+import java.util.ArrayList;
 /**
  * This is an entity class that defines stations
  *
  * @author Zihan Wei
  */
-
-import java.util.ArrayList;
-
 public class Station {
     private char stationName = 0;                    // the name of the station (A, B, C)
     private boolean[] slots;        // the condition of every slots in this station (0---there is no scooter in this slots, 1---there is a scooter in this slot)
@@ -59,9 +57,9 @@ public class Station {
     public int gvMeAScooter() {      // return i means there's a scooter in slot[i], 8 means there's no more scooter
         int i;
         for (i = 0; i < 8; i++) {
-            if (getSlot(i))            // ������slot���г��ͷ���i
+            if (getSlot(i))            
                 break;
-        }                           // ѭ������ʱ��������;û��break����û���ҵ�������ʱiֵΪ8
+        }                           
         return i;
     }
 
@@ -71,9 +69,9 @@ public class Station {
     public int gvAnEmptySlot() {     // return i means it's empty in slot[i], 8 means no more empty slot
         int i;
         for (i = 0; i < 8; i++) {
-            if (!getSlot(i))           // ������slot���޳��ͷ���i
+            if (!getSlot(i))           
                 break;
-        }                           // ѭ������ʱ��������;û��break����û���ҵ���λ����ʱiֵΪ8
+        }                          
         return i;
     }
 

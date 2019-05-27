@@ -1,6 +1,5 @@
-//package JavaProgram;
-
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
@@ -19,13 +18,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-//import JavaProgram.ManagerLogin.AddUserListener;
-//import JavaProgram.ManagerLogin.RevokeListener;
-//import JavaProgram.ManagerLogin.ViewScooterListener;
-//import JavaProgram.ManagerLogin.ViewUserListener;
+
 
 import javax.swing.JTextField;
 
+/**User usage GUI 
+ * This is a GUI interface for managers
+ * to check the user information, such as pick up time, return time, usage time, pay status and fine status 
+ * with existed ID
+ * 
+ * version 2.0
+ * @author Cong Li
+ */
 public class UserUsage extends JFrame {
 
     private JFrame frame;
@@ -40,10 +44,14 @@ public class UserUsage extends JFrame {
     private JButton back = new JButton("Back");
     private JButton email = new JButton("Send Email");
     ArrayList<Usage> usageList;
-
+    
+    /**
+     * Constructor
+     * set the layout, size, font and bound 
+     */
     public UserUsage() {
 
-        String[][][][][][][] datas = {};
+        String[][][][][][][] datas = {}; //string array to store the information array
         String[] titles = {"Pick Up Time", "Return Time", "Usage Time(min)", "Fine Status", "Penalty Status", "Pick up Station", "Return Station"};
         model = new DefaultTableModel(datas, titles);
         table = new JTable(model);
@@ -52,21 +60,24 @@ public class UserUsage extends JFrame {
         checkTable = new JScrollPane(table);
         generateMainPanel();
 
-        usageList = ListJsonSwitch.jsonToUsage();
+        usageList = ListJsonSwitch.jsonToUsage();     
 
+        //add the listener to implement the action when press the confrim button
         addBtn.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+            	//if there exists some rows
                 while (model.getRowCount() > 0) {
                     model.removeRow(model.getRowCount() - 1);
                 }
-                boolean check = ManSysOp.checkID(IDText.getText(), usageList);
+                boolean check = ManSysOp.checkID(IDText.getText(), usageList);// check ID
                 String str = "The ID does not exist! Please check again!";
                 if (check == true) {
                     for (Usage usage : usageList) {
                         if (usage.getUserQMNo().equals(IDText.getText())) {
 
+                        	//add to the row 
                             model.addRow(new String[]{usage.getPickUpTime(), usage.getReturnTime(), usage.getUsageTime(), String.valueOf(usage.getFineStatus()), String.valueOf(usage.getPayStatus()), String.valueOf(usage.getPickUpStation()), String.valueOf(usage.getReturnStation())});
                             ListJsonSwitch.UsageToJson(usageList);
 
@@ -78,7 +89,8 @@ public class UserUsage extends JFrame {
                 }
             }
         });
-
+        
+      //add the listener to implement the action when press the  send email button
         email.addActionListener(new ActionListener() {
 
             @Override
@@ -90,6 +102,7 @@ public class UserUsage extends JFrame {
                     for (Usage usage : usageList) {
                         if (usage.getUserQMNo().equals(IDText.getText())) {
                             try {
+                            	//set the email day to a week
                                 if (sendEmail(usage) < 7) {
                                     System.out.println(usage.toString());
                                 }
@@ -115,6 +128,11 @@ public class UserUsage extends JFrame {
 
     }
 
+    /** send email method
+     * to calculate the email time to send
+     * @param u the usage instance
+     * @return uasgetime the integer of usage time
+     */
     public int sendEmail(Usage u) throws ParseException {
         SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat simpleFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -123,11 +141,14 @@ public class UserUsage extends JFrame {
 
         long pickUptime = fromDate3.getTime();
         long nowtime = toDate3.getTime();
-        int uasgetime = (int) ((nowtime - pickUptime) / (1000 * 60 * 60 * 24));
+        int uasgetime = (int) ((nowtime - pickUptime) / (1000 * 60 * 60 * 24));// miniutes
         return uasgetime;
 
     }
 
+    /** 
+     * method to generate the main panel
+     */
     private void generateMainPanel() {
         settingColors();
         settingBounds();
@@ -171,18 +192,10 @@ public class UserUsage extends JFrame {
         email.addActionListener(new BackListener());
     }
 
-    public static void main(String[] args) {
-        new UserUsage();
-    }
-
-
-    private String getRandomData() {
-        String source = "0123456789abcdefghijklmnopqrstuvwxyz";
-        int len = source.length();
-        Random random = new Random(System.currentTimeMillis());
-        return MessageFormat.format("{0}{0}{0}", source.charAt(random.nextInt(len)));
-    }
-
+    /**Inner listener class
+     * to perform the action when press different buttons 
+     * 
+     */
     class BackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == back) {

@@ -1,14 +1,12 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 /**
  * This is an entity class that defines usage
  *
  * @author Zihan Wei
  */
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Usage {
     private String userQMNo;
     private String pickUpTime = null;
@@ -61,14 +59,14 @@ public class Usage {
     }
 
     public void setPiTime() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//�������ڸ�ʽ
-        pickUpTime = df.format(new Date());// new Date()Ϊ��ȡ��ǰϵͳʱ��
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//
+        pickUpTime = df.format(new Date());// 
 
     }
 
     public void setReturnTime() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//�������ڸ�ʽ
-        returnTime = df.format(new Date());// new Date()Ϊ��ȡ��ǰϵͳʱ��
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//
+        returnTime = df.format(new Date());//
 
     }
 
@@ -103,7 +101,7 @@ public class Usage {
     // other functions
 
     /**
-     * Calculate the usage time according to the pickUpTime & returnTime
+     * Calculate the usage time according to the pickUpTime  returnTime
      */
     public void calUsageTime() {
 
@@ -148,7 +146,7 @@ public class Usage {
         u1.setPiTime();
         System.out.println(u1.getPickUpTime());
         try {
-            Thread.currentThread().sleep(5000);//����
+            Thread.currentThread().sleep(5000);//
         } catch (Exception e) {
         }
         u1.setReturnTime();
@@ -163,7 +161,7 @@ public class Usage {
         u2.setPiTime();
         System.out.println(u1.getPickUpTime());
         try {
-            Thread.currentThread().sleep(10000);//����
+            Thread.currentThread().sleep(10000);//
         } catch (Exception e) {
         }
         u2.setReturnTime();

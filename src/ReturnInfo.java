@@ -1,12 +1,22 @@
-import java.text.ParseException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
+
+/**Return GUI
+ * This is a GUI interface for users 
+ * when they want to return a scooter from the station
+ * it can inform the information and the countdown
+ * 
+ * version 2.0
+ * @author Cong Li
+ */
 public class ReturnInfo extends JFrame {
     private int time = 30;
+    public int number1;
+    // the array list of station, user and usage
     ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
     ArrayList<User> userList = ListJsonSwitch.jsonToUser();
     ArrayList<Usage> usageList = ListJsonSwitch.jsonToUsage();
@@ -18,20 +28,23 @@ public class ReturnInfo extends JFrame {
     JLabel l1 = new JLabel("Please Return Your Scooter Quickly!");
     JLabel l3 = new JLabel("30");
 
-    JButton b1 = new JButton("<");//锟斤拷锟剿硷拷
-    JButton b2 = new JButton(">");//前锟斤拷锟斤拷
     JButton b3 = new JButton("Return");
     Thread t = new Thread(new MyThread());
-    //StationGUI newgui=new StationGUI();
-    public int number1;
-
-
+     
+    /**
+     * Constructor
+     * @param availableSlot 
+     * @param QMID 
+     * @param name 
+     * the integer of the number of available slot, the string of QMID and the integer of station name
+     */
     public ReturnInfo(int availableSlot, String QMID, int name) {
         this.number1 = name;
         StationGUI newgui = new StationGUI(name);
         newgui.t1.setEditable(false);
         newgui.back.setEnabled(false);
         newgui.confirm.setEnabled(false);
+        //judge which the station you choose
         if (name == 0) {
             stationA = stationList.get(0);
         } else if (name == 1) {
@@ -46,8 +59,6 @@ public class ReturnInfo extends JFrame {
 
         p1.setLayout(null);
 
-        b1.setBounds(0, 0, 20, 20);
-        b2.setBounds(20, 0, 20, 20);
         l1.setHorizontalAlignment(SwingConstants.CENTER);
         l1.setBounds(54, 253, 222, 80);
         l3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -58,27 +69,25 @@ public class ReturnInfo extends JFrame {
 
         p1.add(l1);
         p1.add(l3);
-        //p1.add(back);
-        //p1.add(confirm);
         p1.add(b3);
 
         jf.getContentPane().add(p1);
-
+        // and the thread to execute the count down
+        
+        Thread t = new Thread(new MyThread());
         t.start();
-        //t.join();
 
         b3.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                t.stop();//使锟斤拷Thread.stop()锟斤拷锟斤拷锟斤拷锟斤拷莶锟酵拷锟斤拷锟斤拷锟斤拷锟斤拷锟皆疵伙拷锟绞憋拷乇盏锟轿ｏ拷眨锟斤拷锟斤拷锟接︼拷貌锟斤拷锟�
-                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//锟斤拷锟斤拷锟斤拷锟节革拷式
-                //System.out.println(df.format(new Date()));// new Date()为锟斤拷取锟斤拷前系统时锟斤拷
+                t.stop();
                 for (int i = 0; i < 8; i++) {
                     stationA.setLight(i, false);
                 }
-
+                
+                //update to the usagelist and userlist
                 stationA.setSlot(availableSlot, true);
                 if (number1 == 0) {
                     stationA.setStationName('A');
@@ -94,6 +103,8 @@ public class ReturnInfo extends JFrame {
                 StationGUI newgui1 = new StationGUI(name);
                 Usage usage1 = new Usage();
                 JOptionPane.showMessageDialog(null, "Return Successfully!!", "PickupInfo", JOptionPane.PLAIN_MESSAGE);
+                
+                //set the usage QMID. return time, return station
                 for (Usage usage : usageList) {
                     if (usage.getUserQMNo().equals(QMID)) {
                         if (usage.getReturnTime() == null) {
@@ -106,23 +117,20 @@ public class ReturnInfo extends JFrame {
                             } else {
                                 str = 'C';
                             }
-                            usage.setReturnStation(str);
-                            try {
-                                usage.calUsageTime();
-                                usage1 = usage;
-                            } catch (ParseException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
+                            usage.setReturnStation(str);                           
+                            usage.calUsageTime();
+                            usage1 = usage;
+                          
 
                         }
 
                     }
                 }
 
+                //set the user fine and pay status and set the minutes to get the fine
                 for (User user : userList) {
                     if (user.getQMNo().equals(QMID)) {
-                        if (Integer.parseInt(usage1.getUsageTime()) > 0) {
+                        if (Integer.parseInt(usage1.getUsageTime()) > 3) {
                             usage1.setFineStatus(true);
                             user.setFineOrNot(true);
                             user.setPayStatus(false);
@@ -137,8 +145,7 @@ public class ReturnInfo extends JFrame {
                 ListJsonSwitch.UserToJson(userList);
                 jf.dispose();
 
-                //锟斤拷时锟斤拷锟斤拷usage锟斤拷息锟斤拷station锟斤拷息锟斤拷user锟斤拷息
-
+             
             }
 
         });
@@ -148,14 +155,17 @@ public class ReturnInfo extends JFrame {
 
     }
 
-
+    /**Inner class to realize the thread
+     * It can count down the 30s unless you press the button
+     * 
+     */
     class MyThread implements Runnable {
         public void run() {
             while (time > 0) {
                 time--;
                 l3.setText(time + "");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1000);//1s
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -163,6 +173,7 @@ public class ReturnInfo extends JFrame {
 
             }
             if (time == 0) {
+            	// update to the station
                 for (int i = 0; i < 8; i++) {
                     stationA.setLight(i, false);
                 }

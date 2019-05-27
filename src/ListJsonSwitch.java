@@ -1,3 +1,9 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 /**
  *  1. ArrayList to *.json
  *    AllPpToJson
@@ -14,12 +20,6 @@
  *
  * @author Zihan WEI
  */
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class ListJsonSwitch {
     private static String allPeoFileName = "jsonFile\\allPeo.json";
@@ -128,7 +128,7 @@ public class ListJsonSwitch {
     /**
      * Read array list from json file
      *
-     * @return ArrayList<AllPpInSchl>
+     * @return ArrayList
      */
     public static ArrayList<AllPpInSchl> jsonToAllPp(){
         String jsonString = readStringFromJson(allPeoFileName);
@@ -140,7 +140,7 @@ public class ListJsonSwitch {
     /**
      * Read array list from json file
      *
-     * @return ArrayList<User>
+     * @return ArrayList
      */
     public static ArrayList<User> jsonToUser(){
         String jsonString = readStringFromJson(userFileName);
@@ -152,7 +152,7 @@ public class ListJsonSwitch {
     /**
      * Read array list from json file
      *
-     * @return ArrayList<Manager>
+     * @return ArrayList
      */
     public static ArrayList<Manager> jsonToManager(){
         String jsonString = readStringFromJson(managerFileName);
@@ -164,7 +164,7 @@ public class ListJsonSwitch {
     /**
      * Read array list from json file
      *
-     * @return ArrayList<Station>
+     * @return ArrayList
      */
     public static ArrayList<Station> jsonToStation(){
         String jsonString = readStringFromJson(stationFileName);
@@ -176,7 +176,7 @@ public class ListJsonSwitch {
     /**
      * Read array list from json file
      *
-     * @return ArrayList<Usage>
+     * @return ArrayList
      */
     public static ArrayList<Usage> jsonToUsage(){
         String jsonString = readStringFromJson(usageFileName);

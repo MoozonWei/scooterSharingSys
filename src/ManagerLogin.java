@@ -2,7 +2,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import javafx.stage.WindowBuilder;
+/**Manager Login GUI
+ * This is a GUI interface for managers to login into the system
+ * who can do some operations for the system
+ * such as add a user, check station status, check user usage and revoke consumer
+ * 
+ * version 2.0
+ * @author Cong Li, Zihan Wei
+ */
 
 public class ManagerLogin {
 
@@ -18,11 +25,16 @@ public class ManagerLogin {
         ManagerLogin w = new ManagerLogin();
     }
 
+    /**
+     * Constructor
+     */
     public ManagerLogin() {
         generateFrame();
     }
 
-
+    /**
+     * method to generate a frame for UI
+     */
     private void generateFrame() {
         loginFrame.setSize(282, 364);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,7 +49,10 @@ public class ManagerLogin {
         int h = screensize.height / 5;
         loginFrame.setLocation(w, h);
     }
-
+    
+    /**
+     * method to generate a main panel for UI
+     */
     private void generateMainPanel() {
         addActionListeners();
         settingColors();
@@ -48,7 +63,9 @@ public class ManagerLogin {
         mainPanel.add(revokeLabel);
         mainPanel.add(back);
     }
-
+    /**
+     * method to add listeners for the events
+     */
     private void addActionListeners() {
         addUserLabel.addMouseListener(new AddUserListener());
         viewScooterLabel.addMouseListener(new ViewScooterListener());
@@ -56,6 +73,10 @@ public class ManagerLogin {
         revokeLabel.addMouseListener(new RevokeListener());
         back.addActionListener(new BackListener());
     }
+    
+    /**
+     * method to set colors for the labels
+     */
 
     private void settingColors() {
         addUserLabel.setFont(new Font("Dialog", 1, 20));
@@ -64,7 +85,10 @@ public class ManagerLogin {
         revokeLabel.setFont(new Font("Dialog", 1, 20));
 
     }
-
+    
+    /**
+     * method to set bounds for the labels
+     */
     private void settingBounds() {
         addUserLabel.setBounds(10, 56, 244, 39);
         viewScooterLabel.setBounds(10, 129, 244, 39);
@@ -74,7 +98,12 @@ public class ManagerLogin {
         back.setSize(80, 30);
         back.setLocation(10, 10);
     }
-
+    
+    /**Inner class to realize the mouse listener
+     * It includes the mouse click, press and other event methods
+     * for the add user block
+     * 
+     */
     class AddUserListener implements MouseListener {
 
         @Override
@@ -107,12 +136,17 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            addUserLabel.setForeground(Color.BLACK);
+            addUserLabel.setForeground(Color.BLUE);
 
         }
 
     }
 
+    /**Inner class to realize the mouse listener
+     * It includes the mouse click, press and other event methods
+     * for the check scooter usage block
+     * 
+     */
     class ViewScooterListener implements MouseListener {
 
         @Override
@@ -143,12 +177,17 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            viewScooterLabel.setForeground(Color.BLACK);
+            viewScooterLabel.setForeground(Color.BLUE);
 
         }
 
     }
 
+    /**Inner class to realize the mouse listener
+     * It includes the mouse click, press and other event methods
+     * for the check user usage block
+     * 
+     */
     class ViewUserListener implements MouseListener {
 
         @Override
@@ -180,12 +219,18 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            viewUserLabel.setForeground(Color.BLACK);
+            viewUserLabel.setForeground(Color.BLUE);
 
         }
 
     }
 
+    
+    /**Inner class to realize the mouse listener
+     * It includes the mouse click, press and other event methods
+     * for the revoke user block
+     * 
+     */
     class RevokeListener implements MouseListener {
 
         @Override
@@ -216,12 +261,16 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            revokeLabel.setForeground(Color.BLACK);
+            revokeLabel.setForeground(Color.BLUE);
 
         }
 
     }
 
+    /**Inner class to realize the event listener
+     * for the back button
+     * 
+     */
     class BackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == back) {

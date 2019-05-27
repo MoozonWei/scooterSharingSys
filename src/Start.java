@@ -1,5 +1,3 @@
-//package JavaProgram;
-
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
@@ -7,6 +5,14 @@ import java.awt.event.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+/**Add Start GUI
+ * This is a GUI interface for the begining
+ * for users and managers
+ * which can choose the station and for manager to login with correct password and ID
+ * 
+ * version 2.0
+ * @author Qinuo Yao
+ */
 public class Start {
     public static void main(String[] args) {
         ArrayList<Manager> managerList = new ArrayList<>();
@@ -14,6 +20,11 @@ public class Start {
     }
 }
 
+/**Inner class to realize the action listener
+ * It generate the start frame and action performed method
+ * for the different buttons 
+ *  
+ */
 class startUI extends JFrame implements ActionListener {
     JPanel mainpanel;
     JFrame frame;
@@ -22,7 +33,10 @@ class startUI extends JFrame implements ActionListener {
     JButton buttonS3;
     JButton buttonMSys;
 
-
+    /**
+     * Constructor
+     * set the layout, size and bound 
+     */
     public startUI() {
         frame = new JFrame();
         mainpanel = new JPanel();
@@ -66,6 +80,7 @@ class startUI extends JFrame implements ActionListener {
         mainpanel.add(buttonMSys);
     }
 
+    //the action performed methods for different buttons
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonMSys) {
             frame.dispose();
@@ -84,6 +99,11 @@ class startUI extends JFrame implements ActionListener {
 
 }
 
+/**Inner class to realize the action listener
+ * It generate the manager login frame and action performed method
+ * for the different buttons 
+ *  
+ */
 
 class mangerlogin extends JFrame implements ActionListener {
 
@@ -95,6 +115,10 @@ class mangerlogin extends JFrame implements ActionListener {
     JTextField fieldPW;
     ArrayList<Manager> managerList = ListJsonSwitch.jsonToManager();
 
+    /**
+     * Constructor
+     * set the layout, size and bound 
+     */
     public mangerlogin() {
 
     	frame = new JFrame();
@@ -114,41 +138,41 @@ class mangerlogin extends JFrame implements ActionListener {
 
         JLabel lblManagerLogin = new JLabel("Manager Login");
         lblManagerLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        lblManagerLogin.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 22));
+        lblManagerLogin.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.BOLD, 22));
         lblManagerLogin.setSize(372, 37);
         lblManagerLogin.setLocation(20, 43);
         mainpanel.add(lblManagerLogin);
 
         JLabel label2 = new JLabel("Please enter your ID and password.");
-        label2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
+        label2.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.PLAIN, 12));
         label2.setHorizontalAlignment(SwingConstants.CENTER);
         label2.setSize(372, 25);
         label2.setLocation(15, 74);
         mainpanel.add(label2);
 
         JLabel label3 = new JLabel("ID:");
-        label3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
+        label3.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.PLAIN, 12));
         label3.setHorizontalAlignment(SwingConstants.RIGHT);
         label3.setSize(68, 25);
         label3.setLocation(47, 130);
         mainpanel.add(label3);
 
         JLabel label4 = new JLabel("Password:");
-        label4.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
+        label4.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.PLAIN, 12));
         label4.setHorizontalAlignment(SwingConstants.RIGHT);
         label4.setSize(68, 25);
         label4.setLocation(47, 160);
         mainpanel.add(label4);
 
         buttonCom = new JButton("Login");
-        buttonCom.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
+        buttonCom.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.PLAIN, 12));
         buttonCom.addActionListener(this);
         buttonCom.setSize(100, 30);
         buttonCom.setLocation(140, 200);
         mainpanel.add(buttonCom);
 
         back = new JButton("Back");
-        back.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 12));
+        back.setFont(new Font("Î¢ï¿½ï¿½ï¿½Åºï¿½", Font.PLAIN, 12));
         back.addActionListener(this);
         back.setSize(80, 30);
         back.setLocation(10, 10);
@@ -168,8 +192,9 @@ class mangerlogin extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
+    	// if the manager press the confirm button
     	if (e.getSource() == buttonCom) {
-            System.out.println(fieldID.getText());
+   
             String str = ManSysOp.checkManagerLogin(managerList, fieldID.getText(), fieldPW.getText());
             JOptionPane.showMessageDialog(null, str, "Manager Login", JOptionPane.PLAIN_MESSAGE);
             if (str == "Login successful!") {
@@ -177,7 +202,9 @@ class mangerlogin extends JFrame implements ActionListener {
                 ListJsonSwitch.ManagerToJson(managerList);
                 ManagerLogin managerLogin = new ManagerLogin();
             }
-        } else if (e.getSource() == back) {
+        } 
+    	// if the manager press the back button
+    	else if (e.getSource() == back) {
             frame.dispose();
             startUI sUI = new startUI();
         }

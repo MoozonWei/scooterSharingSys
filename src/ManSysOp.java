@@ -1,17 +1,19 @@
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-
+/**
+ * Control class to control the manager operation
+ */
 public class ManSysOp {
 
-    /**
-     * Check if ID does exist & if the password is correct
-     *
-     * @param managerArrayList Database
-     * @param ID               The input ID
-     * @param passwd           The input password
-     * @return Prompt message
-     */
+	/**
+	 * Check if ID does exist if the password is correct
+	 *
+	 * @param managerArrayList Database
+	 * @param ID               The input ID
+	 * @param passwd           The input password
+	 * @return Prompt message
+	 */
     public static String checkManagerLogin(ArrayList<Manager> managerArrayList, String ID, String passwd) {
         for (Manager manager : managerArrayList) {
             System.out.println(manager.getID());
@@ -83,10 +85,9 @@ public class ManSysOp {
      *
      * @param QMID      QMID
      * @param userList  Database
-     * @param usageList Database
-     * @return Return true if success & Return false if failed
+     * @return Return true if success Return false if failed
      */
-    public static boolean revokeUser(String QMID, ArrayList<User> userList, ArrayList<Usage> usageList) {
+    public static boolean revokeUser(String QMID, ArrayList<User> userList) {
         boolean judge = true;
         for (User user : userList) {
             if (user.getQMNo().equals(QMID)) {
@@ -99,18 +100,8 @@ public class ManSysOp {
             } else
                 judge = false;
         }
-        for (Usage usage : usageList) {
-            if (usage.getUserQMNo().equals(QMID)) {
-
-                judge = true;
-                usageList.remove(usage);
-                break;
-
-            } else
-                judge = false;
-        }
-        return judge;
-
+       
+       return judge;
     }
 
     public static void main(String args[]) {
