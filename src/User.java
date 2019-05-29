@@ -4,7 +4,8 @@ public class User{
     private String lName;       // last name
     private String email;       // email address
     private boolean fineOrNot;  // does this user need to pay the fine first? (0---no, 1---yes)
-
+    private boolean paystatus;  // does this user has pay the fine?(0---no,1---yes)
+    private boolean identity;    //confirm the user identity (0---student, 1---staff)
     // constructor
     public User() {
         this.setQMNo(null);
@@ -12,17 +13,20 @@ public class User{
         this.setlName(null);
         this.setEmail(null);
         this.setFineOrNot(false);
+        this.setpaystatus(false);
     }
     public User(String QMNo, String fName, String lName) {
         this.setQMNo(QMNo);
         this.setfName(fName);
         this.setlName(lName);
+        
     }
-    public User(String QMNo, String fName, String lName, String email) {
+    public User(String QMNo, String fName, String lName, String email,boolean identity) {
         this.setQMNo(QMNo);
         this.setfName(fName);
         this.setlName(lName);
         this.setEmail(email);
+        this.setIdentity(identity);
     }
     // getters
     public String getQMNo() {
@@ -56,13 +60,28 @@ public class User{
     public void setFineOrNot(boolean fineOrNot) {
         this.fineOrNot = fineOrNot;
     }
-
+    
+    public void setIdentity(boolean identity) {
+    	this.identity=identity;
+    }
+    public boolean getIdentity() {
+    	return this.identity;
+    }
+    
+    public void setpaystatus(boolean paystatus) {
+    	this.paystatus=paystatus;
+    }
+    public boolean getpaystatus() {
+    	return this.paystatus;
+    }
     @Override
     public String toString() {
         return ("QMNo: " + this.getQMNo() + "\n" +
                 "fName: " + this.getfName() + "\n" +
                 "lName: " + this.getlName() + "\n" +
                 "email: " + this.getEmail() + "\n" +
-                "fineOrNot: " + this.isFineOrNot() + "\n");
+                "identity"+ this.getIdentity()+"\n"+
+                "fineOrNot: " + this.isFineOrNot() + "\n"+
+                "payStatus: "+this.getpaystatus()+"\n");
     }
 }

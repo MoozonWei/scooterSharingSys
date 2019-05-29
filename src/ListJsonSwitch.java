@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * 这个类将完成以下几个功能：
+ * ����ཫ������¼������ܣ�
  * 1. ArrayList to *.json
  *    AllPpToJson
  *    UserToJson

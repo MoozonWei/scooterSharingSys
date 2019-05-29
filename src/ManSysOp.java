@@ -1,63 +1,136 @@
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 
 public class ManSysOp {
 
-    public static String checkLogin(ArrayList<Manager> managerArrayList, String ID, String passwd){
+    public static String checkManagerLogin(ArrayList<Manager> managerArrayList, String ID, String passwd){
         for (Manager manager : managerArrayList) {
-            if(manager.getID()==ID){
-                if(manager.getPasswd()==passwd)
-                    return "Login successful!";                        // 找到ID，密码正确
+        	System.out.println(manager.getID());
+            if(manager.getID().equals(ID)){
+                if(manager.getPasswd().equals(passwd))
+                    return "Login successful!";                        // �ҵ�ID��������ȷ
                 else
-                    return "Wrong password!";                       // 找到ID，密码错误
+                    return "Wrong password!";                       // �ҵ�ID���������
             }
         }
-        return "ID not found!";                                   // 没找到ID
+        return "ID not found!";                                   // û�ҵ�ID
     }
-    // add a user
-    public static User addUser(ArrayList<AllPpInSchl> allPpInSchlArrayList, String QMNo, String email){
+    
+    public static boolean checkID(String QMID,ArrayList<Usage> usageList) {
+    	boolean judge=true;
+    	System.out.println(QMID);
+    	for(Usage usage:usageList) {
+    		System.out.println(usage.getUserQMNo());
+    		if(usage.getUserQMNo().equals(QMID)) {
+    			judge=true;
+    			break;
+    			
+    			
+    		}
+    		else
+    			judge=false;
+    	}
+    	return judge;
+    	
+    }
+ // add a user
+    public static String addUser(String QMID,String fname,String lname,String email,boolean identity,ArrayList<User> userList){
         /*
-            1. 检查所给的QMNo在不在学校的系统中（即遍历AllPpInSchl的ArrayList），如果不在UI显示相关信息
-            2. 检查所给邮箱是不是符合邮箱规则
-            3. 在所有检查都通过之后创建一个新的User类，然后将所添加的信息写入和学生原有的信息写入该类，最后返回这个新创建的类
+            1. ���������QMNo�ڲ���ѧУ��ϵͳ�У�������AllPpInSchl��ArrayList�����������UI��ʾ�����Ϣ
+            2. ������������ǲ��Ƿ����������
+            3. �����м�鶼ͨ��֮�󴴽�һ���µ�User�࣬Ȼ������ӵ���Ϣд���ѧ��ԭ�е���Ϣд����࣬��󷵻�����´�������
          */
-        return null;
+    	if(QMID.isEmpty()||fname.isEmpty()||lname.isEmpty()||email.isEmpty()) {
+			return "Please don't have any blanks. ";                           //��������пյ�
+		}
+		if(Pattern.matches("[0-9]{9}", QMID)==false ) {
+			return "Please enter your QMID in right format (9 digits).";       //QMID���Ǿ�λ����
+		}
+		for(User user : userList) {
+			if(user.getQMNo().equals(QMID)){
+                    return "You have already been registed.";                  //��QMID��ע��       
+            }
+		}
+		if(Pattern.matches(".*@.*", email)==false) {
+			return "Please enter your email address in right format.";         //��������ʽ
+		}
+		userList.add(new User(QMID,fname,lname,email,identity));
+		return "Add user successfully!";                                       //�ɹ�ע��
     }
+    
+    
+    public static boolean revokeUser(String QMID,ArrayList<User> userList,ArrayList<Usage> usageList) {
+    	 /*
+        1. ���ж�������QMNo�ǲ���User֮һ��������Ƿ���false������ʧ�ܣ�����ǵ���������²���
+        2. ����userArrayList�е�����User���ҵ�ѧ����QMNoһ�µ��û���Ȼ��ɾ������Ȼ�󷵻�true��ʾɾ���ɹ�
+
+        ע�⣺�����userArrayListӦ����һ��ϵͳ��ʼʱ�ͼ��غõ� ȫ�ֱ�������i guess...��
+     */
+    	boolean judge=true;
+        for(User user : userList)
+        {
+            if(user.getQMNo().equals(QMID))
+            {
+                
+                judge=true;
+                userList.remove(user);
+               
+                break;
+                
+            }
+            else
+            	judge=false;
+        }
+        //��ôɾ������ʹ�ü�¼
+        for(Usage usage : usageList)
+        {
+            if(usage.getUserQMNo().equals(QMID))
+            {
+                
+                judge=true;
+                usageList.remove(usage);
+                break;
+                
+            }
+            else
+            	judge=false;
+        }
+        return judge;
+    	
+    }
+    //ɾ��ʹ�ü�¼
+    
+    
     // check station condition
     public static boolean[] stationCondition(Station station, char stationName) {
         /*
-            1. 首先先判断要查询的是哪个车站
-            2. 返回该车站的车位信息（即将返回slot[]）
+            1. �������ж�Ҫ��ѯ�����ĸ���վ
+            2. ���ظó�վ�ĳ�λ��Ϣ����������slot[]��
          */
         return null;
     }
+    
     // check user usage
     public static ArrayList<Usage> checkUsageByQMNo(ArrayList<Usage> usageArrayList, String QMNo) {
         /*
-            1. 创建一个新的ArrayList result用来存储需要查询的usage结果
-            2. 遍历usageArrayList中的元素，将与要查询的QMNo相符合的查询结果add到新创建的ArrayList result中
-            3. 返回包含所有查询信息的ArrayList result
+            1. ����һ���µ�ArrayList result�����洢��Ҫ��ѯ��usage���
+            2. ����usageArrayList�е�Ԫ�أ�����Ҫ��ѯ��QMNo����ϵĲ�ѯ���add���´�����ArrayList result��
+            3. ���ذ������в�ѯ��Ϣ��ArrayList result
          */
         return null;
     }
+    
+    //�������ƣ���ѯָ�����ڵ�ʹ�����
     public static ArrayList<Usage> checkUsageByTime(ArrayList<Usage> usageArrayList, String dateInString) {
         /*
-            1. 创建一个新的ArrayList result用来存储需要查询的usage结果
-            2. 遍历usageArrayList中的元素，将与要查询的时间日期相符合的查询结果add到新创建的ArrayList result中
-            3. 返回包含所有查询信息的ArrayList result
+            1. ����һ���µ�ArrayList result�����洢��Ҫ��ѯ��usage���
+            2. ����usageArrayList�е�Ԫ�أ�����Ҫ��ѯ��ʱ����������ϵĲ�ѯ���add���´�����ArrayList result��
+            3. ���ذ������в�ѯ��Ϣ��ArrayList result
          */
         return null;
     }
-    // user revocation
-    public static boolean revokeUser(ArrayList<User> userArrayList, String QMNo) {
-        /*
-            1. 先判断所给的QMNo是不是User之一，如果不是返回false，操作失败；如果是的则继续以下操作
-            2. 遍历userArrayList中的所有User，找到学号与QMNo一致的用户，然后删除它，然后返回true表示删除成功
-
-            注意：这里的userArrayList应该是一个系统开始时就加载好的 全局变量！（i guess...）
-         */
-        return true;
-    }
-
+    
     public static void main(String args[]){
         // test loginCheck()
         Manager manager1 = new Manager("123456", "123456", "Manager", "One");
@@ -65,11 +138,13 @@ public class ManSysOp {
         ArrayList<Manager> managerArrayList = new ArrayList<>();
         managerArrayList.add(manager1);
         managerArrayList.add(manager2);
-        System.out.println(ManSysOp.checkLogin(managerArrayList,"12345678","12345678"));
-        System.out.println(ManSysOp.checkLogin(managerArrayList,"87654321","12345678"));
-
+        System.out.println(ManSysOp.checkManagerLogin(managerArrayList,"123456","12345678"));
+        System.out.println(ManSysOp.checkManagerLogin(managerArrayList,"87654321","12345678"));
+        
+        ArrayList<User> userList = new ArrayList<>();
+        userList=ListJsonSwitch.jsonToUser();
+        System.out.println(userList.toString());
+        
         // test addUser()
-
-
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Station {
     private char stationName = 0;                    // the name of the station (A, B, C)
     private boolean[] slots;        // the condition of every slots in this station (0---there is no scooter in this slots, 1---there is a scooter in this slot)
@@ -26,17 +28,17 @@ public class Station {
     public int gvMeAScooter() {      // return i means there's a scooter in slot[i], 8 means there's no more scooter
         int i;
         for (i = 0; i < 8; i++) {
-            if (getSlot(i))            // 遍历找slot，有车就返回i
+            if (getSlot(i))            // ������slot���г��ͷ���i
                 break;
-        }                           // 循环结束时，表明中途没有break，即没有找到车，此时i值为8
+        }                           // ѭ������ʱ��������;û��break����û���ҵ�������ʱiֵΪ8
         return i;
     }
     public int gvAnEmptySlot() {     // return i means it's empty in slot[i], 8 means no more empty slot
         int i;
         for (i = 0; i < 8; i++) {
-            if (!getSlot(i))           // 遍历找slot，无车就返回i
+            if (!getSlot(i))           // ������slot���޳��ͷ���i
                 break;
-        }                           // 循环结束时，表明中途没有break，即没有找到空位，此时i值为8
+        }                           // ѭ������ʱ��������;û��break����û���ҵ���λ����ʱiֵΪ8
         return i;
     }
     // setters
@@ -65,4 +67,11 @@ public class Station {
                                        "6[" + this.getLight(6) + "] 7[" + this.getLight(7) + "]" + "\n");
     }
 
+    public static void main(String args[]) {
+    	Station stationA=new Station('A');
+    	ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
+    	stationA=stationList.get(0);
+    	
+    	ListJsonSwitch.StationToJson(stationList);
+    }
 }
