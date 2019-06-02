@@ -34,7 +34,7 @@ public class ManSysOp {
     	return judge;
     	
     }
- // add a user
+
     public static String addUser(String QMID,String fname,String lname,String email,boolean identity,ArrayList<User> userList){
         /*
             1. ���������QMNo�ڲ���ѧУ��ϵͳ�У�������AllPpInSchl��ArrayList�����������UI��ʾ�����Ϣ
@@ -58,8 +58,7 @@ public class ManSysOp {
 		userList.add(new User(QMID,fname,lname,email,identity));
 		return "Add user successfully!";                                       //�ɹ�ע��
     }
-    
-    
+
     public static boolean revokeUser(String QMID,ArrayList<User> userList,ArrayList<Usage> usageList) {
     	 /*
         1. ���ж�������QMNo�ǲ���User֮һ��������Ƿ���false������ʧ�ܣ�����ǵ���������²���
@@ -99,10 +98,7 @@ public class ManSysOp {
         return judge;
     	
     }
-    //ɾ��ʹ�ü�¼
     
-    
-    // check station condition
     public static boolean[] stationCondition(Station station, char stationName) {
         /*
             1. �������ж�Ҫ��ѯ�����ĸ���վ
@@ -111,7 +107,6 @@ public class ManSysOp {
         return null;
     }
     
-    // check user usage
     public static ArrayList<Usage> checkUsageByQMNo(ArrayList<Usage> usageArrayList, String QMNo) {
         /*
             1. ����һ���µ�ArrayList result�����洢��Ҫ��ѯ��usage���
@@ -121,7 +116,6 @@ public class ManSysOp {
         return null;
     }
     
-    //�������ƣ���ѯָ�����ڵ�ʹ�����
     public static ArrayList<Usage> checkUsageByTime(ArrayList<Usage> usageArrayList, String dateInString) {
         /*
             1. ����һ���µ�ArrayList result�����洢��Ҫ��ѯ��usage���

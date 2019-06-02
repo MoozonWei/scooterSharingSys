@@ -1,548 +1,397 @@
-//package gui;
 import java.awt.*;
-
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-
-import JavaProject.ReturnInfo.MyThread;
+import javax.swing.border.LineBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
 import java.util.ArrayList;
 
-//GUI�Ľ���̫�label�����button����
+//GUI锟侥斤拷锟斤拷太锟筋，label锟斤拷锟斤拷锟絙utton锟斤拷锟斤拷
 
-public class StationGUI extends JFrame implements ActionListener{
-	
-	
-	ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
-	ArrayList<User> userList = new ArrayList<>();
-	ArrayList<Usage> usageList = new ArrayList<>();
-	public int number;
-	//Station stationA=stationList.get(0);
-	Station stationA=new Station();
-	
-	JFrame jf = new JFrame(); 
-	JPanel p1=new JPanel();
-	JPanel p2=new JPanel(new GridLayout(5,9));
-	JPanel p3=new JPanel();
-	JPanel p4=new JPanel();
-	
-	JButton b1 = new JButton("Back");
-	JButton b2 = new JButton("Confirm");
-	
-	JLabel l1=new JLabel("Station");
-	JLabel l2=new JLabel(" ");//Station���� ���ݲ�ѯ��station���ı����������ʾ
-	JLabel l3=new JLabel("Scanner: Please enter your QMID");
-	JLabel l4=new JLabel("QMID");
-	JLabel l5=new JLabel("Available Scooters:");
-	JLabel l6=new JLabel("Empty Slots:");
-	JLabel asnbr=new JLabel("");//���õ�scooters������  ����ʵ�ֵ�ʱ�����ͨ�����������������ʾ����
-	JLabel esnbr=new JLabel("");//�յ�slots������  ����ʵ�ֵ�ʱ�����ͨ�����������������ʾ����
-	
-	JLabel l7 = new JLabel("Position");
-	JLabel l8 = new JLabel("1");
-	JLabel l9 = new JLabel("2");
-	JLabel l10 = new JLabel("3");
-	JLabel l11 = new JLabel("4");
-	JLabel l12 = new JLabel("5");
-	JLabel l13 = new JLabel("6");
-	JLabel l14 = new JLabel("7");
-	JLabel l15 = new JLabel("8");
-	JLabel l16 = new JLabel("Scooter");
-	JLabel l17 = new JLabel("State");
-	JLabel s1 = new JLabel("");
-	JLabel s2 = new JLabel("");
-	JLabel s3 = new JLabel("");
-	JLabel s4 = new JLabel("");
-	JLabel s5 = new JLabel("");
-	JLabel s6 = new JLabel("");
-	JLabel s7 = new JLabel("");
-	JLabel s8 = new JLabel("");//��ǰ8��Ϊ�Ƿ��г���״̬��ʾ
-	JLabel s9 = new JLabel("");
-	JLabel s10 = new JLabel("");
-	JLabel s11 = new JLabel("");
-	JLabel s12 = new JLabel("");
-	JLabel s13 = new JLabel("");
-	JLabel s14 = new JLabel("");
-	JLabel s15 = new JLabel("");
-	JLabel s16 = new JLabel("");//���8��Ϊ�۵�״̬������ͨ���á����+8����ֱ���޸�
-	
-	
-	
-	JTextField t1 = new JTextField();//QMID�����
-	
-	//------------------------------------lock and buld------------------------------------//
-	 ImageIcon[] bulb = {
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-            new ImageIcon("bulb.jpg"),
-        };
-		
-	JLabel bulbshow = new JLabel("Bulb:");
-	
-	JLabel[] bulblabel = {
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-	};//This label is used to store image.
-	
-	
-	ImageIcon[] lock = {
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-            new ImageIcon("lock.jpg"),
-        };
+public class StationGUI extends JFrame implements ActionListener {
+
+
+    ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
+    ArrayList<User> userList = new ArrayList<>();
+    ArrayList<Usage> usageList = new ArrayList<>();
+    public int number;
+    Station stationA;
+
+    JFrame jf = new JFrame();
+    JPanel p1 = new JPanel();
+    JPanel p2 = new JPanel();
+    JPanel p3 = new JPanel();
+    JPanel p4 = new JPanel();
+
+    JButton back = new JButton("Back");
+    JButton confirm = new JButton("Confirm");
+
+    JLabel station = new JLabel("Station", JLabel.CENTER);
+    JLabel l2 = new JLabel(" ", JLabel.CENTER);
+    JLabel qmid = new JLabel("QMID", JLabel.CENTER);
+    JLabel available_slot = new JLabel("Available Scooters:", JLabel.RIGHT);
+    JLabel empty_slot = new JLabel("Empty Slots:", JLabel.RIGHT);
+    JLabel asnbr = new JLabel("", JLabel.CENTER);
+    JLabel esnbr = new JLabel("", JLabel.CENTER);
+
+    JLabel position = new JLabel("Position", JLabel.CENTER);
+    JLabel position_1 = new JLabel("1", JLabel.CENTER);
+    JLabel position_2 = new JLabel("2", JLabel.CENTER);
+    JLabel position_3 = new JLabel("3", JLabel.CENTER);
+    JLabel position_4 = new JLabel("4", JLabel.CENTER);
+    JLabel position_5 = new JLabel("5", JLabel.CENTER);
+    JLabel position_6 = new JLabel("6", JLabel.CENTER);
+    JLabel position_7 = new JLabel("7", JLabel.CENTER);
+    JLabel position_8 = new JLabel("8", JLabel.CENTER);
+    JLabel scooter = new JLabel("Scooter", JLabel.CENTER);
+    JLabel slot1 = new JLabel("slot1", JLabel.CENTER);
+    JLabel slot2 = new JLabel("slot2", JLabel.CENTER);
+    JLabel slot3 = new JLabel("slot3", JLabel.CENTER);
+    JLabel slot4 = new JLabel("slot4", JLabel.CENTER);
+    JLabel slot5 = new JLabel("slot5", JLabel.CENTER);
+    JLabel slot6 = new JLabel("slot6", JLabel.CENTER);
+    JLabel slot7 = new JLabel("slot7", JLabel.CENTER);
+    JLabel slot8 = new JLabel("slot8", JLabel.CENTER);
+
+    JTextField t1 = new JTextField();
+    
+    ImageIcon[] bulb = { new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"),
+			new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"), new ImageIcon("bulb.jpg"),
+			new ImageIcon("bulb.jpg"), };
+
+	JLabel bulbshow = new JLabel("Bulb");
+
+	JLabel[] bulblabel = { new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER),
+			new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), };// This label is used to store image.
+
+	ImageIcon[] lock = { new ImageIcon("lock.jpg"), new ImageIcon("lock.jpg"), new ImageIcon("lock.jpg"),
+			new ImageIcon("lock.jpg"), new ImageIcon("lock.jpg"), new ImageIcon("lock.jpg"), new ImageIcon("lock.jpg"),
+			new ImageIcon("lock.jpg"), };
 	
 	ImageIcon unlock = new ImageIcon("unlock.jpg");
-		
-	JLabel lockshow = new JLabel("Lock:");
-	
-	JLabel[] locklabel = {
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-		new JLabel(""),
-	};//This label is used to store image.
-	
-	//------------------------------------lock and buld------------------------------------//
-	
-	public StationGUI(int name){
-		this.number=name;
 
-		if(name==0) {
-		stationA=stationList.get(0);
-		l2.setText("A");
-	}
-	else if(name==1) {
-		stationA=stationList.get(1);
-		l2.setText("B");
-	}
-	else {
-		stationA=stationList.get(2);
-		l2.setText("C");
-	
-	}
-	
-		 jf.setSize(800,700);
-		 jf.setLocation(300,0); 
-		 
-		 p1.setBounds(0,0,800,70);//���������ǰ�����˺�station����
-		 p2.setBounds(0,80,800,200);//station��ǰ״��
-		 p3.setBounds(200, 400, 400, 150);//qmid����
-		 p4.setBounds(0, 550, 800, 150);//��ѯ���
-		 
-		 l1.setBounds(325,30,130,40);
-		 l2.setBounds(455,30,20,40);
-		 l3.setBounds(150, 0, 200, 75);
-		 l4.setBounds(0, 75, 100, 75);
-		 l5.setBounds(0, 0, 150, 75);
-		 l6.setBounds(0, 40, 150, 75);
-		 asnbr.setBounds(150, 0, 200, 75);
-		 esnbr.setBounds(150, 40, 200, 75);
-		 t1.setBounds(100, 75, 300, 75);
-		 
-		 jf.setLayout(null);
-		 p1.setLayout(null);
-		 p3.setLayout(null);
-		 p4.setLayout(null);
-		 
-		 l7.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l8.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l9.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l10.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l11.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l12.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l13.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l14.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l15.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l16.setBorder(BorderFactory.createLineBorder(Color.black));
-		 l17.setBorder(BorderFactory.createLineBorder(Color.black));
-		 
-		 s1.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s2.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s3.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s4.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s5.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s6.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s7.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s8.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s9.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s10.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s11.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s12.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s13.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s14.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s15.setBorder(BorderFactory.createLineBorder(Color.black));
-		 s16.setBorder(BorderFactory.createLineBorder(Color.black));
+	JLabel lockshow = new JLabel("Lock");
 
-		 p3.setBorder(BorderFactory.createLineBorder(Color.black));
-		 
-		 p1.add(l1);
-		 p1.add(l2);
-		 p1.add(b1);
-		 p1.add(b2);
-		 
-		 p2.add(l7);
-		 p2.add(l8);
-		 p2.add(l9);
-		 p2.add(l10);
-		 p2.add(l11);
-		 p2.add(l12);
-		 p2.add(l13);
-		 p2.add(l14);
-		 p2.add(l15);
-		 p2.add(l16);
-		 p2.add(s1);
-		 p2.add(s2);
-		 p2.add(s3);
-		 p2.add(s4);
-		 p2.add(s5);
-		 p2.add(s6);
-		 p2.add(s7);
-		 p2.add(s8);
-		 p2.add(l17); 
-		 p2.add(s9);
-		 p2.add(s10);
-		 p2.add(s11);
-		 p2.add(s12);
-		 p2.add(s13);
-		 p2.add(s14);
-		 p2.add(s15);
-		 p2.add(s16);
-		 
-		 if(stationA.getSlot(0)==true)
-			 s1.setText("true");
-		 else
-			 s1.setText("false");
-		 
-		 if(stationA.getSlot(1)==true)
-			 s2.setText("true");
-		 else
-			 s2.setText("false");
-		 
-		 if(stationA.getSlot(2)==true)
-			 s3.setText("true");
-		 else
-			 s3.setText("false");
-		 
-		 if(stationA.getSlot(3)==true)
-			 s4.setText("true");
-		 else
-			 s4.setText("false");
-		 
-		 if(stationA.getSlot(4)==true)
-			 s5.setText("true");
-		 else
-			 s5.setText("false");
-		 
-		 if(stationA.getSlot(5)==true)
-			 s6.setText("true");
-		 else
-			 s6.setText("false");
-		 
-		 if(stationA.getSlot(6)==true)
-			 s7.setText("true");
-		 else
-			 s7.setText("false");
-		 
-		 if(stationA.getSlot(7)==true)
-			 s8.setText("true");
-		 else
-			 s8.setText("false");
-		 
-		 
-		 int count=0;
-		 for(int i=0;i<8;i++) {
-			 if(stationA.getSlot(i)==true) {
-				 count++;
-			 }
-		 }
-		 
-		 asnbr.setText(count+"");
-		 esnbr.setText((8-count)+"");
-		 
-		 
-		 
+	JLabel[] locklabel = { new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER),
+			new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), };// This label is used to store image.
 
-		 //���������Խ��
-//------------------------------------lock and buld------------------------------------//
-		 //����дһ������
-		 
-		 p2.add(bulbshow); 
+    //------------------------------------lock and buld------------------------------------//
+
+    public StationGUI (int name) {
+        this.number = name;
+
+        if (name == 0) {
+            stationA = stationList.get(0);
+            l2.setText("A");
+        } else if (name == 1) {
+            stationA = stationList.get(1);
+            l2.setText("B");
+        } else {
+            stationA = stationList.get(2);
+            l2.setText("C");
+
+        }
+
+        jf.setSize(810, 406);
+        jf.setLocation(300, 0);
+
+        p1.setBounds(0, 0, 800, 70);
+        p2.setBounds(0, 80, 800, 190);
+        p3.setBounds(407, 307, 380, 41);
+        p4.setBorder(new LineBorder(new Color(0, 0, 0)));
+        p4.setBounds(10, 307, 364, 41);
+        station.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+
+        station.setBounds(325, 30, 130, 40);
+        l2.setBounds(455, 30, 20, 40);
+        qmid.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        qmid.setBounds(0, 0, 100, 41);
+        available_slot.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        available_slot.setBounds(0, 0, 120, 41);
+        empty_slot.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        empty_slot.setBounds(191, 0, 129, 41);
+        asnbr.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        asnbr.setBounds(130, 0, 31, 41);
+        esnbr.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        esnbr.setBounds(330, 0, 31, 41);
+        t1.setBounds(117, 0, 263, 41);
+
+        jf.getContentPane().setLayout(null);
+        p1.setLayout(null);
+        p3.setLayout(null);
+        p4.setLayout(null);
+
+        p3.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        p1.add(station);
+        p1.add(l2);
+        back.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        p1.add(back);
+        confirm.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        p1.add(confirm);
+        p2.setLayout(new GridLayout(4, 9, 0, 0));
+        position.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position);
+        position_1.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_1.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_1);
+        position_2.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_2.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_2);
+        position_3.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_3.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_3);
+        position_4.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_4.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_4);
+        position_5.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_5.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_5);
+        position_6.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_6.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_6);
+        position_7.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_7.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_7);
+        position_8.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        position_8.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(position_8);
+        scooter.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        scooter.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(scooter);
+        slot1.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+
+        slot1.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot1);
+        slot2.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot2.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot2);
+        slot3.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot3.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot3);
+        slot4.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot4.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot4);
+        slot5.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot5.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot5);
+        slot6.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot6.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot6);
+        slot7.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot7.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot7);
+        slot8.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        slot8.setBorder(BorderFactory.createLineBorder(Color.black));
+        p2.add(slot8);
+
+        p3.add(qmid);
+        p3.add(t1);
+
+        p4.add(available_slot);
+        p4.add(empty_slot);
+        p4.add(asnbr);
+        p4.add(esnbr);
+
+        jf.getContentPane().add(p1);
+        jf.getContentPane().add(p2);
+        jf.getContentPane().add(p3);
+        jf.getContentPane().add(p4);
+
+
+        back.setSize(80, 30);
+        back.setLocation(10, 10);
+        back.addActionListener(this);
+
+        confirm.setSize(80, 30);
+        confirm.setLocation(100, 10);
+        confirm.addActionListener(this);
+
+
+
+        if (stationA.getSlot(0) == true)
+            slot1.setText("true");
+        else
+            slot1.setText("false");
+
+        if (stationA.getSlot(1) == true)
+            slot2.setText("true");
+        else
+            slot2.setText("false");
+
+        if (stationA.getSlot(2) == true)
+            slot3.setText("true");
+        else
+            slot3.setText("false");
+
+        if (stationA.getSlot(3) == true)
+            slot4.setText("true");
+        else
+            slot4.setText("false");
+
+        if (stationA.getSlot(4) == true)
+            slot5.setText("true");
+        else
+            slot5.setText("false");
+
+        if (stationA.getSlot(5) == true)
+            slot6.setText("true");
+        else
+            slot6.setText("false");
+
+        if (stationA.getSlot(6) == true)
+            slot7.setText("true");
+        else
+            slot7.setText("false");
+
+        if (stationA.getSlot(7) == true)
+            slot8.setText("true");
+        else
+            slot8.setText("false");
+
+
+        int count = 0;
+        for (int i = 0; i < 8; i++) {
+            if (stationA.getSlot(i) == true) {
+                count++;
+            }
+        }
+
+        asnbr.setText(count + "");
+        esnbr.setText((8 - count) + "");
+        bulbshow.setBorder(new LineBorder(new Color(0, 0, 0)));
+        bulbshow.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        bulbshow.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        p2.add(bulbshow);
+        		
+		int lightNo=-1;
 		 for(int i=0;i<8;i++)
 		 {
 		 	bulblabel[i].setIcon(bulb[i]);
+		 	bulblabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
 		    p2.add(bulblabel[i]);
 		    if(stationA.getLight(i)==false) {
 		    	bulblabel[i].setVisible(false);
 		    }
 		    else {
 		    	bulblabel[i].setVisible(true);
+		    	lightNo=i;
 		    }
 		    
 		 }
-		 
-		 //-------------------This is just to simulate the lighting system---------------------
-		 //int testRandomNum = (int)(1+Math.random()*(7-0+1));
-		 // bulblabel[testRandomNum].setVisible(true);
-		 
-		 
-		 p2.add(lockshow);		 
-		 for(int i=0;i<8;i++)
-		 {
-		 	locklabel[i].setIcon(lock[i]);
-		    p2.add(locklabel[i]);
-		    System.out.println(stationA.getSlot(i));
-		    if(stationA.getLight(i)==false) {
-		    	locklabel[i].setVisible(true);
-		    	
-		    }
-		    else {
-		    	locklabel[i].setIcon(unlock);
-		    	//locklabel[i].setVisible(false);
-		    	
-		    }
-		    
-		    
-		 }
-		 
-		 //-------------------This is just to simulate the locking system---------------------
-		
-		 //locklabel[testRandomNum].setIcon(unlock);
-		//ImageIcon unlock = new ImageIcon("unlock.jpg");
-		 //locklabel[testRandomNum].setIcon(unlock);
-		 
-//------------------------------------lock and buld------------------------------------//
-		 
-		 p3.add(l3);
-		 p3.add(l4);
-		 p3.add(t1);
-		 
-		 p4.add(l5);
-		 p4.add(l6);
-		 p4.add(asnbr);
-		 p4.add(esnbr);
-		 
-		 jf.add(p1);
-		 jf.add(p2);
-		 jf.add(p3);
-		 jf.add(p4);
-		 
-		 
-		
-		 b1.setSize(80,30);
-         b1.setLocation(10,10);	
-         b1.addActionListener(this);
-         //System.out.println("zheli");
-         
-         b2.setSize(80,30);
-         b2.setLocation(100,10);	
-         b2.addActionListener(this);
-         //System.out.println("zhelirr");
-         
-         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 jf.setVisible(true);
-         
-         //b2.setBounds(300, 600, 80, 30);	
-         //b2.addActionListener(new BackListener());
-		 
-		 
-	}
-//
-//	public static void main(String[] args) {
-//		StationGUI myStationGUI=new StationGUI();
-//		
-//	}
-	
-	
-       public void actionPerformed(ActionEvent e) {
-    	userList=ListJsonSwitch.jsonToUser();
-    	usageList=ListJsonSwitch.jsonToUsage();
-    	
-       if(e.getSource()==b1)
-	   {
-	       jf.dispose();
-         //function choose
-		   startUI sUI = new startUI(); 
-       }
-       else if (e.getSource() == b2) {
-    	   
-    	   //��дһ������
-    	   
-           String QMID = t1.getText();
-           // ���
-           ArrayList<User> userArrayList = ListJsonSwitch.jsonToUser();
-           /*1. ���QMID����*/
-           if (t1.getText().length()==9) {
-               /*2. ���QMID�Ƿ����*/
-               if (StationController.userChecking(userArrayList, QMID)) {
-            	  
-            	   
-                   /*3. ����ǽ賵���ǻ���*/
-                   ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
-                   ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
-               //	Station stationA=stationList.get(0);
-                   if (!StationController.usageChecking(usageArrayList, QMID)) {
-                       // �賵������
-                       /*
-                       * ��������ʱ + ȡ��button
-                       * */
-                	 //����Ƿ��з���
-                	 if(StationController.pickUpFineChecking(userList,QMID)==true) {
-                		 JOptionPane.showMessageDialog(null, "Sorry , you are fined!", "Pick up Scooter", JOptionPane.PLAIN_MESSAGE);
-                		 //��ʱ�����������
-                		 
-                		 //д�ڷ�������
-                		 
-                		//------------------------------------FineSystem------------------------------------//
-                         JDialog fine=new JDialog(jf);
-    		             fine.setModal(true);
-    		             fine.setSize(480,200);
-    		             fine.setLocationRelativeTo(jf);
-    		             fine.setLayout(null);
-    		             JButton pay = new JButton("Pay");
-    	                 JLabel label = new JLabel("Please pay the fine so that your account won't be froze.");
+		lockshow.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lockshow.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+		lockshow.setHorizontalAlignment(SwingConstants.CENTER);
 
-    		             fine.add(pay);
-    		             fine.add(label);
-    		             label.setBounds(60,20,400,30);
-    		             pay.setBounds(200,80,80,40);
-    		             pay.addActionListener(new ActionListener()
-    		             {
-    			             public void actionPerformed(ActionEvent e) {
-    			            	 
-    			            	 //д��һ��������
-                             //changing the fined status of user usage
-    						 for(User user : userList) {
-                                if(user.getQMNo().equals(QMID)) {
-                                    user.setFineOrNot(false);
-                                    user.setpaystatus(true);
-                                    break;
-                                   }
-                              }
-    						  
-    						  for(Usage usage : usageArrayList) {
-    							  
-                                 if(usage.getUserQMNo().equals(QMID)) {
-                                	 
-                                	 if(usage.getFineStatus()==true) {
-                                		
-                                		 usage.setPaystatus(true);
-                                		 usage.setFineStatus(false);
-                                	
-                                		 break; //������break
-                                		 
-                                	 }                                	 
-                	                 
-                              }
-                                 
-    		                 fine.dispose();
-    						  }
-    						  ListJsonSwitch.UsageToJson(usageArrayList);
-                          
-              	        	 ListJsonSwitch.UserToJson(userList);
-                         }
-    		               });
-    		             fine.setVisible(true);
-    //-----------------------------------FineSystem-----------------------------------//
-    		             JOptionPane.showMessageDialog(null, "The fined has benn payed successfully", "Fine", JOptionPane.PLAIN_MESSAGE);						 						 
-    				 
-                    	 
-                	 }
-                	 //û�з����ʱ��
-                	 else {
-                		 
-                		    int availableSlot = stationA.gvMeAScooter();
-                        	System.out.println(availableSlot);
-                            if (availableSlot >= 0 && availableSlot < 8) {
-                         	    stationA.setLight(availableSlot, true);
-                         	   System.out.println(stationA.getLight(availableSlot));
-                         	   stationList.set(number, stationA);
-                         	    //stationList.get(number)=stationA;
-                                ListJsonSwitch.StationToJson(stationList);
-                                ListJsonSwitch.UsageToJson(usageList);
-               	        	    ListJsonSwitch.UserToJson(userList);
-                                jf.dispose();
-                                //StationGUI newgui=new StationGUI();                         	   
-                         	   
-                            	PickupInfo pi=new PickupInfo(availableSlot,QMID,number);
-                            }
-                            else {
-                            	JOptionPane.showMessageDialog(null, "Sorry! There is no available slots,Please try another station", "Pick up Scooter", JOptionPane.PLAIN_MESSAGE);
-                            }
-                	 }
-                   	
-                   	//�ȼ���Ƿ��г�λ
-                   	
-                       //JOptionPane.showMessageDialog(null, "��װ���ǽ賵����ʱ", "�賵", JOptionPane.PLAIN_MESSAGE);
-                   }
-                   else {
-                       // ����������
-                       /*
-                       * ��������ʱ + ����button
-                       * */
-                   	//�ȼ���Ƿ��п�λ
-                   	 int availableSlot = stationA.gvAnEmptySlot();
-                   	 System.out.println(availableSlot);
-                        if (availableSlot >=0 && availableSlot < 8) {
-                       	
-                            stationA.setLight(availableSlot, true);
-                            stationList.set(number, stationA);
-                            ListJsonSwitch.StationToJson(stationList);
-                            ListJsonSwitch.UsageToJson(usageList);
-           	        	    ListJsonSwitch.UserToJson(userList);
-                            jf.dispose();
-                            //StationGUI newgui=new StationGUI();
-                            
-							ReturnInfo ri=new ReturnInfo(availableSlot,QMID,number);
-							
-					
-                       	 
-                       	 //ImageIcon lock = new ImageIcon("lock.jpg");
-                       	 //locklabel[availableSlot].setIcon(lock);
-                       	// bulblabel[availableSlot].setVisible(false);
-                       
-                        }
-                        else {
-                        
-                       	 JOptionPane.showMessageDialog(null, "Sorry! There is no empty slots,Please try another station", "Pick up Scooter", JOptionPane.PLAIN_MESSAGE);
-                        }
-                       
-                   }
-               }
-               else {
-                   /*������*/
-                   JOptionPane.showMessageDialog(null, "This QMID doesn't exist!", "Warning", JOptionPane.PLAIN_MESSAGE);
-               }
-           }
-           else {
-               /*��ʾQMID�ĳ��Ȳ���9λ*/
-               JOptionPane.showMessageDialog(null, "QMID should be 9 digits!", "Warning", JOptionPane.PLAIN_MESSAGE);
-           }
-       }
-   }
-       
-       
-       
+		p2.add(lockshow);
+		for (int i = 0; i < 8; i++) {
+			locklabel[i].setIcon(lock[i]);
+			locklabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
+			p2.add(locklabel[i]);
+			System.out.println(stationA.getSlot(i));
+			if (stationA.getLight(i) == false) {
+				locklabel[i].setVisible(true);
+
+			} else {
+				locklabel[i].setIcon(unlock);
+			
+			}
+
+		}
+
+
+
+
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
+        
+        if(lightNo>=0&&lightNo<9){//Create a new thread if there is a light need to be lightning
+
+			Thread clearthread = new Thread(new clearthread(lightNo,name));
+           
+			
+			clearthread.start();
+		}
+    }
+    
+    class clearthread implements Runnable{
+		int lightNo;
+		boolean live=true;
+		int HP;
+		int name;
+		public clearthread(int lightNo,int name){
+			this.lightNo=lightNo;
+			this.live=true;
+			this.HP=43; //750ms一个循环
+			this.name=name;
+		}
+		public void run(){
+			System.out.println("light success");
+
+			while(this.live){//Only when the thread is live,it will work.
+				bulblabel[lightNo].setVisible(true);
+				System.out.println("---------light success1");
+				delay();
+				System.out.println("---------light success2");
+				bulblabel[lightNo].setVisible(false);
+				delay();
+				HP--;
+				if(HP==0)
+					this.live=false;
+				live=getLive(this.name);//Judge whrther it should live or not.
+			}
+			System.out.println("**----------This light thread died");
+		}
+
+		public boolean getLive(int na){
+			ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
+			boolean lightJudge;
+			char nameT;
+			if(na==0)
+				nameT='A';
+			else if(na==1)
+				nameT='B';
+			else
+				nameT='C';
+
+			for (Station st : stationList) {
+				if(st.getStationName()==nameT){
+					if(!st.getLight(this.lightNo))
+						return false;
+				}
+			}
+			return true;
+		}
+
+		public void delay(){
+			long startTime =  System.currentTimeMillis();
+			while(true)
+			{
+				long endTime =  System.currentTimeMillis();
+				long usedTime = (endTime-startTime);
+				if(usedTime>350)
+					break;
+			}
+		}
+	}
+	
+    public void actionPerformed(ActionEvent e) {
+        String QMID = t1.getText();
+        userList = ListJsonSwitch.jsonToUser();
+        usageList = ListJsonSwitch.jsonToUsage();
+        ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
+        ArrayList<Station> stationList = ListJsonSwitch.jsonToStation();
+        ArrayList<User> userArrayList = ListJsonSwitch.jsonToUser();
+
+        if (e.getSource() == back) {
+            jf.dispose();
+            startUI sUI = new startUI();
+        } else if (e.getSource() == confirm) {
+            StationController.stationInAll(QMID, stationA, number, jf);
+        }
+    }
+
 }    

@@ -8,3 +8,9 @@
 out
 gen
 /test/
+/.classpath
+/.project
+.classpath
+.project
+.settings/
+src/windowBuildertest.java
