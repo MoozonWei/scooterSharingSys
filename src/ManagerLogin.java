@@ -107,7 +107,7 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            addUserLabel.setForeground(Color.BLUE);
+            addUserLabel.setForeground(Color.BLACK);
 
         }
 
@@ -143,7 +143,7 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            viewScooterLabel.setForeground(Color.BLUE);
+            viewScooterLabel.setForeground(Color.BLACK);
 
         }
 
@@ -180,7 +180,7 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            viewUserLabel.setForeground(Color.BLUE);
+            viewUserLabel.setForeground(Color.BLACK);
 
         }
 
@@ -216,7 +216,7 @@ public class ManagerLogin {
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
-            revokeLabel.setForeground(Color.BLUE);
+            revokeLabel.setForeground(Color.BLACK);
 
         }
 

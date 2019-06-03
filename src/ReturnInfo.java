@@ -125,10 +125,10 @@ public class ReturnInfo extends JFrame {
                         if (Integer.parseInt(usage1.getUsageTime()) > 0) {
                             usage1.setFineStatus(true);
                             user.setFineOrNot(true);
-                            user.setpaystatus(false);
+                            user.setPayStatus(false);
                         } else {
                             user.setFineOrNot(false);
-                            user.setpaystatus(false);
+                            user.setPayStatus(false);
                         }
                     }
                 }

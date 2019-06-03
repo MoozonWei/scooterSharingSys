@@ -1,3 +1,9 @@
+/**
+ * This is an entity class that defines managers
+ *
+ * @author Zihan Wei
+ */
+
 public class Manager {
     private String ID;
     private String passwd;

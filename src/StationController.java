@@ -5,6 +5,13 @@ import java.util.ArrayList;
 
 public class StationController {
 
+    /**
+     * Check if this QMNo exist in database
+     *
+     * @param userArrayList Database
+     * @param QMNo QMID
+     * @return Exist ---- true; Not exist ---- false
+     */
     public static boolean userExistChecking(ArrayList<User> userArrayList, String QMNo) {
         for (User user : userArrayList) {
             if (user.getQMNo().equals(QMNo))
@@ -13,6 +20,13 @@ public class StationController {
         return false;
     }
 
+    /**
+     * Check if this user has an unpaid fine
+     *
+     * @param userArrayList
+     * @param QMNo
+     * @return Yes --- true; No --- false
+     */
     public static boolean pickUpFineChecking(ArrayList<User> userArrayList, String QMNo) {
         for (User user : userArrayList) {
             if (user.getQMNo().equals(QMNo)) {
@@ -23,17 +37,14 @@ public class StationController {
         return false;
     }
 
-    public static boolean returnFineChecking(ArrayList<Usage> usageArrayList, String QMNo) {
-        for (Usage usage : usageArrayList) {
-            if (usage.getUserQMNo().equals(QMNo)) {
-                if (usage.getReturnTime() == null)
-                    return false;                        // there isn't any un-return scooter
-            }
-        }
-        return true;
-    }
-
-    public static boolean usageChecking(ArrayList<Usage> usageArrayList, String QMNo) {
+    /**
+     * Check if there is an un-return usage in the database
+     *
+     * @param usageArrayList Database
+     * @param QMNo QMID
+     * @return Yes --- true; No --- false
+     */
+    public static boolean unReturnedUsageChecking(ArrayList<Usage> usageArrayList, String QMNo) {
         for (Usage usage : usageArrayList) {
             if (usage.getUserQMNo().equals(QMNo)) {
                 if (usage.getReturnTime() == null)
@@ -43,16 +54,14 @@ public class StationController {
         return false;                                   // there isn't any un-return scooter
     }
 
-    public static int indexOFUnfinishedUsage(ArrayList<Usage> usageArrayList, String QMNo) {
-        for (Usage usage : usageArrayList) {
-            if (usage.getUserQMNo().equals(QMNo)) {
-                if (usage.getReturnTime() == null)
-                    return usageArrayList.indexOf(usage);
-            }
-        }
-        return -1;
-    }
-
+    /**
+     * Do all the work when a user pick up a scooter
+     *
+     * @param QMID QMID
+     * @param stationA Station
+     * @param stationNumber Station number: 0 --- A; 1 --- B; 2 --- C
+     * @param jf JFrame
+     */
     public static void pickUpScooter(String QMID, Station stationA, int stationNumber, JFrame jf) {
 
         ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
@@ -76,6 +85,14 @@ public class StationController {
         }
     }
 
+    /**
+     * Do all the work when a user return a scooter
+     *
+     * @param QMID QMID
+     * @param stationA Station
+     * @param stationNumber Station number: 0 --- A; 1 --- B; 2 --- C
+     * @param jf JFrame
+     */
     public static void returnScooter(String QMID, Station stationA, int stationNumber, JFrame jf) {
 
         ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
@@ -100,6 +117,12 @@ public class StationController {
         }
     }
 
+    /**
+     * Do all the work when a user has to pay fine
+     *
+     * @param QMID QMID
+     * @param jf JFrame
+     */
     public static void payFine(String QMID, JFrame jf) {
 
         ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
@@ -124,14 +147,14 @@ public class StationController {
                 for (User user : userArrayList) {
                     if (user.getQMNo().equals(QMID)) {
                         user.setFineOrNot(false);
-                        user.setpaystatus(true);
+                        user.setPayStatus(true);
                         break;
                     }
                 }
                 for (Usage usage : usageArrayList) {
                     if (usage.getUserQMNo().equals(QMID)) {
                         if (usage.getFineStatus() == true) {
-                            usage.setPaystatus(true);
+                            usage.setPayStatus(true);
                             usage.setFineStatus(false);
                             break;
                         }
@@ -147,6 +170,14 @@ public class StationController {
         JOptionPane.showMessageDialog(null, "The fined has benn payed successfully", "Fine", JOptionPane.PLAIN_MESSAGE);
     }
 
+    /**
+     * Handle most of the logic in StationGUI
+     *
+     * @param QMID QMID
+     * @param stationA Station
+     * @param stationNumber Station number: 0 --- A; 1 --- B; 2 --- C
+     * @param jf JFrame
+     */
     public static void stationInAll(String QMID, Station stationA, int stationNumber, JFrame jf) {
 
         ArrayList<Usage> usageArrayList = ListJsonSwitch.jsonToUsage();
@@ -157,7 +188,7 @@ public class StationController {
             JOptionPane.showMessageDialog(null, "QMID should be 9 digits!", "Warning", JOptionPane.PLAIN_MESSAGE);
         } else if (!StationController.userExistChecking(userArrayList, QMID)) {
             JOptionPane.showMessageDialog(null, "This QMID doesn't exist!", "Warning", JOptionPane.PLAIN_MESSAGE);
-        } else if (!StationController.usageChecking(usageArrayList, QMID)) {
+        } else if (!StationController.unReturnedUsageChecking(usageArrayList, QMID)) {
             if (StationController.pickUpFineChecking(userArrayList, QMID) == true) {
                 JOptionPane.showMessageDialog(null, "Sorry , you are fined!", "Pick up Scooter", JOptionPane.PLAIN_MESSAGE);
                 StationController.payFine(QMID, jf);

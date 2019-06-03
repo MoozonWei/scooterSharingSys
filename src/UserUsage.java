@@ -1,7 +1,6 @@
 //package JavaProgram;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
@@ -68,7 +67,7 @@ public class UserUsage extends JFrame {
                     for (Usage usage : usageList) {
                         if (usage.getUserQMNo().equals(IDText.getText())) {
 
-                            model.addRow(new String[]{usage.getPickUpTime(), usage.getReturnTime(), usage.getUsageTime(), String.valueOf(usage.getFineStatus()), String.valueOf(usage.getpaystatus()), String.valueOf(usage.getPickUpStation()), String.valueOf(usage.getReturnStation())});
+                            model.addRow(new String[]{usage.getPickUpTime(), usage.getReturnTime(), usage.getUsageTime(), String.valueOf(usage.getFineStatus()), String.valueOf(usage.getPayStatus()), String.valueOf(usage.getPickUpStation()), String.valueOf(usage.getReturnStation())});
                             ListJsonSwitch.UsageToJson(usageList);
 
                         }

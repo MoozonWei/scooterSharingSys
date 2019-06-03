@@ -1,3 +1,9 @@
+/**
+ * This is an entity class that defines usage
+ *
+ * @author Zihan Wei
+ */
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,29 +72,15 @@ public class Usage {
 
     }
 
-    public void calUsageTime() throws ParseException {
-
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat simpleFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date fromDate3 = simpleFormat.parse(this.getPickUpTime());
-        Date toDate3 = simpleFormat1.parse(this.getReturnTime());
-        long pickUptime = fromDate3.getTime();
-        long returntime = toDate3.getTime();
-        int uasgetime = (int) ((returntime - pickUptime) / (1000 * 60));
-        this.usageTime = String.valueOf(uasgetime);
-
-
-    }
-
     public String getUsageTime() {
         return usageTime;
     }
 
-    public void setPaystatus(boolean payStatus) {
+    public void setPayStatus(boolean payStatus) {
         this.payStatus = payStatus;
     }
 
-    public boolean getpaystatus() {
+    public boolean getPayStatus() {
         return this.payStatus;
     }
 
@@ -108,6 +100,35 @@ public class Usage {
         this.returnStation = returnStation;
     }
 
+    // other functions
+
+    /**
+     * Calculate the usage time according to the pickUpTime & returnTime
+     */
+    public void calUsageTime() {
+
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date fromDate3 = null;
+        try {
+            fromDate3 = simpleFormat.parse(this.getPickUpTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date toDate3 = null;
+        try {
+            toDate3 = simpleFormat1.parse(this.getReturnTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long pickUptime = fromDate3.getTime();
+        long returntime = toDate3.getTime();
+        int uasgetime = (int) ((returntime - pickUptime) / (1000 * 60));
+        this.usageTime = String.valueOf(uasgetime);
+
+
+    }
+
     @Override
     public String toString() {
         return ("user QMNo: " + this.getUserQMNo() + "\n" +
@@ -116,7 +137,7 @@ public class Usage {
                 "pick up station: " + this.getPickUpStation() + "\n" +
                 "return station: " + this.getReturnStation() + "\n" +
                 "fine status: " + this.getFineStatus() + "\n" +
-                "payStatus: " + this.getpaystatus() + "\n");
+                "payStatus: " + this.getPayStatus() + "\n");
     }
 
     public static void main(String args[]) throws ParseException {
@@ -134,7 +155,7 @@ public class Usage {
         System.out.println(u1.getReturnTime());
         u1.calUsageTime();
         u1.setFineStatus(true);
-        u1.setPaystatus(false);
+        u1.setPayStatus(false);
 
         usageList.add(u1);
 
